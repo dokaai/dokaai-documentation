@@ -1,0 +1,135 @@
+name: Deploy Documentation WIF
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - "app/**"
+      - "components/**"
+      - "content/**"
+      - "lib/**"
+      - "public/**"
+      - "scripts/**"
+      - "api/**"
+      - "Dockerfile"
+      - "eslint.config.mjs"
+      - "next.config.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "postcss.config.mjs"
+      - "proxy.ts"
+      - "source.config.ts"
+      - "tsconfig.json"
+      - ".github/workflows/gcp_web_app_wif.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-docs-wif-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GAR_NAME: frontend-services
+      GAR_LOCATION: ${{ vars.GCP_REGION }}
+      GAR_SERVICE: docs
+      SERVICE: docs
+      REGION: ${{ vars.GCP_REGION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: Docker Auth
+        run: gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Resolve image coordinates
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_id="$(printf '%s' '${{ env.PROJECT_ID }}' | tr -d '\r\n')"
+          gar_location="$(printf '%s' '${{ env.GAR_LOCATION }}' | tr -d '\r\n')"
+          gar_name="$(printf '%s' '${{ env.GAR_NAME }}' | tr -d '\r\n')"
+          gar_service="$(printf '%s' '${{ env.GAR_SERVICE }}' | tr -d '\r\n')"
+          image_ref="${gar_location}-docker.pkg.dev/${project_id}/${gar_name}/${gar_service}:${{ github.sha }}"
+          echo "image_ref=$image_ref" >> "$GITHUB_OUTPUT"
+
+      - name: Check existing SHA image
+        id: check-image
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gcloud artifacts docker images describe "${{ steps.image.outputs.image_ref }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Image already exists for ${{ github.sha }}. Skipping rebuild."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Image does not exist for ${{ github.sha }}. Build and push required."
+          fi
+
+      - name: Write build env file
+        if: steps.check-image.outputs.exists != 'true'
+        shell: bash
+        env:
+          WEB_APP_ENV_SECRET: ${{ secrets.WEB_APP_ENV_SECRET }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$WEB_APP_ENV_SECRET" > .env.production
+
+      - name: Build and Push Container
+        if: steps.check-image.outputs.exists != 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: ${{ steps.image.outputs.image_ref }}
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Resolve image digest
+        id: image-digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_ref="$(printf '%s' '${{ steps.image.outputs.image_ref }}' | tr -d '\r\n')"
+          image_digest="$(gcloud artifacts docker images describe "$image_ref" --format='value(image_summary.fully_qualified_digest)')"
+
+          if [[ -z "$image_digest" ]]; then
+            echo "Unable to resolve image digest for $image_ref" >&2
+            exit 1
+          fi
+
+          echo "image_digest=$image_digest" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ steps.image-digest.outputs.image_digest }}
+          env_vars: ${{ secrets.WEB_APP_ENV_SECRET }}
+          env_vars_update_strategy: overwrite
+
+      - name: Show Output
+        run: echo "${{ steps.deploy.outputs.url }}"

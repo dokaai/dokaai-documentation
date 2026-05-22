@@ -6822,11 +6822,9 @@
                             ]
                           },
                           "createdDate": {
-                            "format": "date-time",
                             "type": "string"
                           },
                           "modifiedDate": {
-                            "format": "date-time",
                             "type": "string"
                           },
                           "isActive": {
@@ -6921,7 +6919,14 @@
                                     "type": "string"
                                   },
                                   "completedAt": {
-                                    "type": "string"
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
                                   }
                                 }
                               },
@@ -23700,6 +23705,214 @@
           }
         },
         "description": "Get a client job by id for the current project."
+      }
+    },
+    "/nudge/subscription/usage-summary": {
+      "get": {
+        "tags": [
+          "Subscription"
+        ],
+        "operationId": "getServicePlanUsageSummary",
+        "summary": "Get Notification Service Plan Usage Summary",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data",
+                    "metaData",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "planName",
+                        "currentUsagePeriodTimeline",
+                        "subscriptionServiceType",
+                        "summary"
+                      ],
+                      "properties": {
+                        "planName": {
+                          "type": "string"
+                        },
+                        "currentUsagePeriodTimeline": {
+                          "type": "object",
+                          "required": [
+                            "startDate",
+                            "endDate"
+                          ],
+                          "properties": {
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "subscriptionServiceType": {
+                          "const": "notification",
+                          "type": "string"
+                        },
+                        "summary": {
+                          "type": "object",
+                          "required": [
+                            "totalQuotaLimit",
+                            "totalOverage",
+                            "totalQuotaUsed",
+                            "totalOverageUsed"
+                          ],
+                          "properties": {
+                            "totalQuotaLimit": {
+                              "type": "number"
+                            },
+                            "totalOverage": {
+                              "type": "number"
+                            },
+                            "totalQuotaUsed": {
+                              "type": "number"
+                            },
+                            "totalOverageUsed": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "metaData": {
+                      "type": "null"
+                    },
+                    "error": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get the current usage summary for a notification service plan."
       }
     }
   },
