@@ -53,22 +53,58 @@ html > body[data-scroll-locked] {
 #nd-docs-layout,
 #nd-notebook-layout,
 #nd-flux-layout {
+  --fd-layout-width: 100vw;
   background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  #nd-notebook-layout {
+    --fd-sidebar-width: 360px;
+  }
 }
 
 #nd-sidebar,
 #nd-sidebar-mobile {
-  background-color: var(--color-fd-background);
+  background-color: #fff;
+  box-shadow: 1px 0 0 rgba(15, 23, 42, 0.06);
 }
 
 #nd-docs-layout {
   background-color: #fff;
 }
 
-#nd-docs-layout > header,
+#nd-subnav {
+  background-color: var(--color-fd-background);
+  z-index: 30;
+}
+
+#nd-subnav [data-header-body],
+#nd-subnav [data-header-tabs] {
+  padding-inline: 5vw;
+}
+
+#nd-subnav [data-header-body] {
+  border-bottom: 0;
+}
+
+#nd-sidebar > div:first-child,
+#nd-sidebar [data-radix-scroll-area-viewport] {
+  padding-inline-start: 5vw;
+}
+
 #nd-toc,
 #nd-docs-layout [data-toc-popover] {
   background-color: #fff;
+}
+
+#nd-page {
+  box-shadow: -1px 0 0 rgba(15, 23, 42, 0.04);
+}
+
+@media (min-width: 1280px) {
+  #nd-toc {
+    padding-inline-end: 5vw;
+  }
 }
 
 #nd-page[data-full='true'] {
@@ -80,8 +116,13 @@ html > body[data-scroll-locked] {
 #nd-page.dokaai-api-page {
   grid-column: 3 / 5;
   width: 100%;
-  max-width: min(1320px, calc(100vw - var(--fd-sidebar-width) - 2rem));
   margin-inline: 0;
+}
+
+@media (min-width: 768px) {
+  #nd-page.dokaai-api-page {
+    max-width: min(1440px, calc(100vw - var(--fd-sidebar-width) - 5vw));
+  }
 }
 
 #nd-page[data-full='true'] form.not-prose > div.flex.flex-row.items-center:has(> button[type='submit']) {
@@ -118,6 +159,10 @@ html > body[data-scroll-locked] {
   line-height: 1.6;
 }
 
+#nd-page[data-full='true'] form.not-prose [data-type='authorization'] {
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
 #nd-page[data-full='true'] form.not-prose > div.border-y figure {
   overflow-x: auto;
   overflow-y: hidden;
@@ -145,22 +190,23 @@ html > body[data-scroll-locked] {
 #nd-sidebar a,
 #nd-sidebar button {
   color: var(--color-fd-muted-foreground);
+  border-radius: 10px;
 }
 
 #nd-sidebar a:hover,
 #nd-sidebar button:hover {
-  background-color: transparent;
+  background-color: rgba(15, 23, 42, 0.05);
   color: var(--color-fd-foreground);
 }
 
 #nd-sidebar a[data-active='true'],
 #nd-sidebar button[data-active='true'] {
-  background-color: transparent;
+  background-color: #e2f3ef;
   color: var(--color-fd-primary);
 }
 
 #nd-sidebar a[data-active='true']:hover,
 #nd-sidebar button[data-active='true']:hover {
-  background-color: transparent;
+  background-color: #F1F9F7;
   color: var(--color-fd-primary);
 }

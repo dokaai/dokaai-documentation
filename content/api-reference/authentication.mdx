@@ -2,7 +2,233 @@
 title: Authentication
 description: API authentication
 ---
+# Authentication
 
-# Hello world
+This section explains the authentication mechanisms used across the DokaAI API platform.
 
-This is an example API Reference side navigation item.
+The APIs support two authentication models depending on the integration type:
+
+* **Client API Key & Secret** — for server-to-server integrations
+* **Customer Bearer Token (JWT)** — for customer-scoped APIs
+
+---
+
+# Client API Key & Secret
+
+Use client credentials for secure backend or server-to-server communication.
+
+These credentials authenticate your application or service when calling protected APIs.
+
+## Required Headers
+
+Include both headers in every request:
+
+```http
+x-client-key: <client-api-key>
+x-client-secret: <client-api-secret>
+```
+
+## Example Request
+
+```bash
+curl --request GET \
+  --url http://localhost:3000/your-api-route \
+  --header 'x-client-key: YOUR_CLIENT_API_KEY' \
+  --header 'x-client-secret: YOUR_CLIENT_API_SECRET'
+```
+
+## Security Recommendations
+
+* Store credentials securely on the server side
+* Never expose client secrets in:
+
+  * frontend applications
+  * browser-based code
+  * mobile applications
+* Rotate credentials periodically
+* Use environment variables or secret managers for storage
+
+---
+
+# Customer Bearer Token (JWT)
+
+Customer-scoped APIs use JWT bearer authentication.
+
+This authentication flow is designed for APIs operating on behalf of an authenticated customer, such as:
+
+* in-app notifications
+* customer preferences
+* customer communication settings
+* notification inbox APIs
+
+---
+
+# Required Configuration
+
+```bash
+CUSTOMER_JWT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+CUSTOMER_SIGNING_KEY_ID="a89c4bdd-60d9-4803-ac2d-c7a06c56074e"
+CUSTOMER_UNIQUE_CUSTOMER_ID="CUSTOMER3"
+CUSTOMER_WORKSPACE_ID="ONAVZK8J"
+CUSTOMER_PRODUCT_SPACE_CODE="BRSFBN0O"
+```
+
+## Optional Configuration
+
+```bash
+CUSTOMER_JWT_EXPIRES_IN="15m"
+```
+
+Default expiration is `15 minutes`.
+
+---
+
+# JWT Structure
+
+Customer tokens are signed using the `RS256` algorithm.
+
+## JWT Header
+
+| Field | Description                                           |
+| ----- | ----------------------------------------------------- |
+| `kid` | Signing key identifier from `CUSTOMER_SIGNING_KEY_ID` |
+
+## JWT Payload
+
+| Field                | Description                |
+| -------------------- | -------------------------- |
+| `type`               | Always set to `"customer"` |
+| `sub`                | Unique customer identifier |
+| `workspace_id`       | Workspace identifier       |
+| `product_space_code` | Product space identifier   |
+
+---
+
+# TypeScript Example
+
+```ts
+import * as jwt from 'jsonwebtoken';
+
+function normalizePrivateKey(privateKey: string): string {
+  return privateKey.includes('\\n')
+    ? privateKey.replace(/\\n/g, '\n')
+    : privateKey;
+}
+
+const token = jwt.sign(
+  {
+    type: 'customer',
+    workspace_id: process.env.CUSTOMER_WORKSPACE_ID,
+    product_space_code: process.env.CUSTOMER_PRODUCT_SPACE_CODE
+  },
+  normalizePrivateKey(process.env.CUSTOMER_JWT_PRIVATE_KEY || ''),
+  {
+    algorithm: 'RS256',
+    keyid: process.env.CUSTOMER_SIGNING_KEY_ID,
+    subject: process.env.CUSTOMER_UNIQUE_CUSTOMER_ID,
+    expiresIn: process.env.CUSTOMER_JWT_EXPIRES_IN || '15m',
+    jwtid: `customer-${process.env.CUSTOMER_UNIQUE_CUSTOMER_ID}-${Date.now()}`
+  }
+);
+```
+
+---
+
+# Using The JWT
+
+Send the generated token using the standard `Authorization` header:
+
+```http
+Authorization: Bearer <jwt>
+```
+
+If your API client provides a bearer token field, provide only the raw JWT value.
+
+---
+
+# WebSocket Connection Example
+
+For websocket-based customer features such as in-app live notification delivery, use the same bearer-style token through the Socket.IO `auth.token` field.
+
+## Socket.IO Authentication Format
+
+```ts
+auth: {
+  token: 'Bearer <jwt>'
+}
+```
+
+## JavaScript Example
+
+```ts
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:3000', {
+  path: '/api/v1/wss/socket.io',
+  transports: ['websocket'],
+  auth: {
+    token: `Bearer ${token}`
+  }
+});
+
+socket.on('connect', () => {
+  console.log('Connected:', socket.id);
+});
+
+socket.on('inAppMessage', (message) => {
+  console.log('Received in-app message:', message);
+});
+
+socket.on('connect_error', (error) => {
+  console.error('WebSocket connection failed:', error.message);
+});
+
+socket.on('disconnect', (reason) => {
+  console.log('Disconnected:', reason);
+});
+```
+
+---
+
+# Best Practices
+
+* Keep JWT expiration short-lived
+* Never expose private signing keys publicly
+* Rotate signing keys regularly
+* Validate:
+
+  * signature
+  * expiration
+  * token type
+  * workspace access
+* Use HTTPS for all API communication
+
+---
+
+# Authentication Flow Overview
+
+## Server-to-Server APIs
+
+```text
+Client Application
+        │
+        ├── x-client-key
+        └── x-client-secret
+                │
+                ▼
+         DokaAI APIs
+```
+
+## Customer-Scoped APIs
+
+```text
+Customer Authentication
+        │
+        ▼
+Generate Customer JWT
+        │
+        └── Authorization: Bearer <jwt>
+                │
+                ▼
+         DokaAI APIs
+```

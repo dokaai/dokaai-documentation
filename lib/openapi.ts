@@ -28,6 +28,7 @@ function getDokaaiOpenAPISchema() {
 }
 
 export const openapi = createOpenAPI({
+  proxyUrl: '/api/proxy',
   input: () => ({
     'api/index.json': getDokaaiOpenAPISchema(),
   }),

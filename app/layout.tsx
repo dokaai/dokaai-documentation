@@ -1,10 +1,16 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
+import { getMetadataBase } from '@/lib/metadata';
 
 const inter = Inter({
   subsets: ['latin'],
 });
+
+export const metadata: Metadata = {
+  metadataBase: getMetadataBase(),
+};
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
@@ -12,8 +18,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
       <body className="flex flex-col min-h-screen">
         <RootProvider
           theme={{
-            defaultTheme: 'light',
-            enableSystem: false,
+            enabled: false,
           }}
         >
           {children}
