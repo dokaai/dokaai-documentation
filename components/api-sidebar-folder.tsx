@@ -3,6 +3,7 @@
 import type * as PageTree from 'fumadocs-core/page-tree';
 import { usePathname } from 'next/navigation';
 import { useTreePath } from 'fumadocs-ui/contexts/tree';
+import { stripBasePath } from '@/lib/shared';
 import {
   SidebarFolder,
   SidebarFolderContent,
@@ -21,7 +22,7 @@ export function ApiSidebarFolder({
   item: PageTree.Folder;
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
+  const pathname = stripBasePath(usePathname());
   const path = useTreePath();
 
   if (pathname.startsWith('/api-reference')) {

@@ -1,14 +1,65 @@
 ---
-title: Hello World
-description: Dokaai documentation home
+title: Overview
+description: Learn what Dokaai is and where to start.
 ---
 
-Hello world from Dokaai docs.
+# Dokaai Documentation
 
-Use the top navigation tabs to open Documentation, Integration, or API Reference.
+Dokaai is a customer engagement and notification platform for building reliable, multi-channel communication workflows. It helps teams design notification handlers, connect delivery providers, manage customer audiences, and trigger messages from product events or backend systems.
 
-<Cards>
-  <Card title="Documentation" href="/documentation" />
-  <Card title="Integration" href="/integration" />
-  <Card title="API Reference" href="/api-reference" />
-</Cards>
+Use these docs to understand the product model first, then connect integrations and move into the API reference when you are ready to automate.
+
+## What Dokaai helps you build
+
+Dokaai brings notification logic, audience targeting, delivery channels, and customer preferences into one workspace. Instead of spreading messaging rules across application code, provider dashboards, and one-off scripts, you can manage the core communication flow from a single product surface.
+
+Typical use cases include:
+
+- Sending transactional alerts from product events.
+- Managing notification handlers for email, SMS, push, WhatsApp, chat, and in-app channels.
+- Grouping customers into pools, target audience lists, cohorts, and segments.
+- Respecting customer preferences before delivery.
+- Connecting provider integrations without hardcoding provider-specific logic into every workflow.
+- Tracking notification execution and delivery state across channels.
+
+## Critical links
+
+Start with the pages below when setting up or reviewing a Dokaai project.
+
+- [Quickstart](/quickstart): the shortest path to understand the workspace, configure a handler, and send a test notification.
+- [Core Concepts](/concepts): product vocabulary and how the main Dokaai objects fit together.
+- [Workspace](/concepts/workspace): how organizations, projects, members, and services are organized.
+- [Integration Overview](/integration): where to connect Dokaai with channels, providers, and external systems.
+- [API Reference](/api-reference): generated endpoint documentation for automating Dokaai from your backend.
+- [Authentication](/api-reference/authentication): how API requests are authenticated.
+- [Send Notification](/api-reference/endpoints/send-notification): the main send endpoint entry point.
+
+## Product areas
+
+### Notification handlers
+
+Notification handlers define what should be sent, through which channels, and under which configuration. A handler can contain channel templates, provider settings, recipients, preferences, and publishing state.
+
+### Customers and audiences
+
+Dokaai keeps customer data and audience grouping close to notification workflows. Customer pools, target audience lists, cohort segments, and notification groups help decide who should receive a message.
+
+### Channel providers
+
+Provider integrations connect Dokaai to the delivery services you use for email, SMS, push, WhatsApp, chat, and in-app notifications. This keeps delivery configuration reusable across handlers.
+
+### Preferences
+
+Customer preferences let you control whether a customer should receive a notification for a topic, group, channel, or other configured delivery rule.
+
+### API automation
+
+The API reference is generated from the OpenAPI schema. Use it when you need to trigger events, manage customers, update handlers, or integrate Dokaai with backend services.
+
+## Recommended path
+
+1. Read the [Quickstart](/quickstart).
+2. Review [Core Concepts](/concepts).
+3. Connect the required providers from [Integration](/integration).
+4. Test your first send flow from [Send Notification](/api-reference/endpoints/send-notification).
+5. Use the [API Reference](/api-reference) for production automation.

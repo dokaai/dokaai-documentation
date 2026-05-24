@@ -5,7 +5,7 @@ export const docsTabs: LayoutTab[] = [
   {
     title: 'Documentation',
     description: 'Product docs',
-    url: '/documentation',
+    url: '/',
     icon: <BookOpen className="size-4" />,
   },
   {
