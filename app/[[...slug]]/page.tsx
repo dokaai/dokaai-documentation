@@ -7,7 +7,7 @@ import {
   MarkdownCopyButton,
   ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/notebook/page';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -19,9 +19,7 @@ type PageParams = {
 
 export default async function Page(props: { params: Promise<PageParams> }) {
   const params = await props.params;
-  if (!params.slug) redirect('/documentation');
-
-  const page = source.getPage(params.slug);
+  const page = source.getPage(params.slug ?? []);
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -62,7 +60,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: { params: Promise<PageParams> }): Promise<Metadata> {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = source.getPage(params.slug ?? []);
   if (!page) notFound();
 
   return {

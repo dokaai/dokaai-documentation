@@ -1,3 +1,11 @@
 {
-  "pages": ["documentation", "integration", "api-reference"]
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "quickstart",
+    "concepts",
+    "---Reference---",
+    "integration",
+    "api-reference"
+  ]
 }

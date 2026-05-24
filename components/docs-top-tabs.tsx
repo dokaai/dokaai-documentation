@@ -5,11 +5,12 @@ import { usePathname } from 'next/navigation';
 import { BookOpen, Code, Plug } from 'lucide-react';
 import type { ComponentProps } from 'react';
 import { cn } from '@/lib/cn';
+import { stripBasePath } from '@/lib/shared';
 
 const tabs = [
   {
     title: 'Documentation',
-    href: '/documentation',
+    href: '/',
     icon: BookOpen,
   },
   {
@@ -25,7 +26,7 @@ const tabs = [
 ];
 
 export function DocsTopTabs({ className, ...props }: ComponentProps<'header'>) {
-  const pathname = usePathname();
+  const pathname = stripBasePath(usePathname());
 
   return (
     <header
