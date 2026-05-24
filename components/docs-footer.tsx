@@ -1,42 +1,43 @@
 import Link from 'next/link';
 import { BriefcaseBusiness, Camera, Globe, Play } from 'lucide-react';
+import { withBasePath } from '@/lib/shared';
 
 const footerSections = [
   {
     title: 'Services',
     links: [
-      { label: 'Notification', href: '/documentation' },
-      { label: 'Engagement', href: '/documentation' },
-      { label: 'Rewards', href: '/documentation' },
-      { label: 'Search', href: '/documentation' },
+      { label: 'Notification', href: '/' },
+      { label: 'Engagement', href: '/' },
+      { label: 'Rewards', href: '/' },
+      { label: 'Search', href: '/' },
     ],
   },
   {
     title: 'Industry Solutions',
     links: [
-      { label: 'Education', href: '/documentation' },
-      { label: 'Retail & E-commerce', href: '/documentation' },
-      { label: 'Fintech', href: '/documentation' },
-      { label: 'Health care', href: '/documentation' },
+      { label: 'Education', href: '/' },
+      { label: 'Retail & E-commerce', href: '/' },
+      { label: 'Fintech', href: '/' },
+      { label: 'Health care', href: '/' },
     ],
   },
   {
     title: 'Use Cases',
     links: [
-      { label: 'Realtime Messaging', href: '/documentation' },
-      { label: 'Omnichannel communication', href: '/documentation' },
-      { label: 'Developer flexibility', href: '/documentation' },
-      { label: 'Marketing campaigns', href: '/documentation' },
+      { label: 'Realtime Messaging', href: '/' },
+      { label: 'Omnichannel communication', href: '/' },
+      { label: 'Developer flexibility', href: '/' },
+      { label: 'Marketing campaigns', href: '/' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'About us', href: '/documentation' },
+      { label: 'About us', href: '/' },
       { label: 'Integrations', href: '/integration' },
-      { label: 'Documentation', href: '/documentation' },
-      { label: 'Privacy policy', href: '/documentation' },
-      { label: 'Terms of use', href: '/documentation' },
+      { label: 'Documentation', href: '/' },
+      { label: 'Privacy policy', href: '/' },
+      { label: 'Terms of use', href: '/' },
     ],
   },
 ];
@@ -53,8 +54,12 @@ export function DocsFooter() {
     <footer className="mx-auto w-full max-w-[1440px] bg-[#fafafa]">
       <div className="grid gap-10 lg:grid-cols-[1.25fr_repeat(4,minmax(0,1fr))]">
         <div className="max-w-[240px]">
-          <Link href="/documentation" className="inline-flex items-center gap-3">
-            <img src="/dokkai-logo.svg" alt="Dokaai" className="h-8 w-auto shrink-0" />
+          <Link href="/" className="inline-flex items-center gap-3">
+            <img
+              src={withBasePath('/dokkai-logo.svg')}
+              alt="Dokaai"
+              className="h-8 w-auto shrink-0"
+            />
             <span className="text-lg font-semibold tracking-[0.18em] text-fd-primary">DOKAAI</span>
           </Link>
           <p className="mt-5 text-sm leading-8 text-fd-foreground/80">
