@@ -1,4 +1,5 @@
 const ALLOWED_ORIGINS = new Set([
+  'https://api.dokaai.com',
   'https://dev-api-service-718412652823.asia-south1.run.app',
   'http://localhost:3009',
 ]);
