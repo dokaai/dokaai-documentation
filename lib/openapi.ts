@@ -1,5 +1,6 @@
 import { createOpenAPI } from 'fumadocs-openapi/server';
 import { readFileSync } from 'node:fs';
+import { withBasePath } from '@/lib/shared';
 
 function getDokaaiOpenAPISchema() {
   const schema = JSON.parse(readFileSync('./api/index.json', 'utf8'));
@@ -28,7 +29,7 @@ function getDokaaiOpenAPISchema() {
 }
 
 export const openapi = createOpenAPI({
-  proxyUrl: '/api/proxy',
+  proxyUrl: withBasePath('/api/proxy'),
   input: () => ({
     'api/index.json': getDokaaiOpenAPISchema(),
   }),

@@ -6687,58 +6687,72 @@
                                     ]
                                   },
                                   "group": {
-                                    "additionalProperties": false,
-                                    "type": "object",
-                                    "required": [
-                                      "id",
-                                      "channels"
-                                    ],
-                                    "properties": {
-                                      "id": {
-                                        "type": "string"
-                                      },
-                                      "channels": {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "string",
-                                          "enum": [
-                                            "in_app",
-                                            "email",
-                                            "sms",
-                                            "chat",
-                                            "push",
-                                            "whatsApp"
-                                          ]
+                                    "anyOf": [
+                                      {
+                                        "additionalProperties": false,
+                                        "type": "object",
+                                        "required": [
+                                          "id",
+                                          "channels"
+                                        ],
+                                        "properties": {
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "channels": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "enum": [
+                                                "in_app",
+                                                "email",
+                                                "sms",
+                                                "chat",
+                                                "push",
+                                                "whatsApp"
+                                              ]
+                                            }
+                                          }
                                         }
+                                      },
+                                      {
+                                        "type": "null"
                                       }
-                                    }
+                                    ]
                                   },
                                   "topic": {
-                                    "additionalProperties": false,
-                                    "type": "object",
-                                    "required": [
-                                      "id",
-                                      "channels"
-                                    ],
-                                    "properties": {
-                                      "id": {
-                                        "type": "string"
-                                      },
-                                      "channels": {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "string",
-                                          "enum": [
-                                            "in_app",
-                                            "email",
-                                            "sms",
-                                            "chat",
-                                            "push",
-                                            "whatsApp"
-                                          ]
+                                    "anyOf": [
+                                      {
+                                        "additionalProperties": false,
+                                        "type": "object",
+                                        "required": [
+                                          "id",
+                                          "channels"
+                                        ],
+                                        "properties": {
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "channels": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "enum": [
+                                                "in_app",
+                                                "email",
+                                                "sms",
+                                                "chat",
+                                                "push",
+                                                "whatsApp"
+                                              ]
+                                            }
+                                          }
                                         }
+                                      },
+                                      {
+                                        "type": "null"
                                       }
-                                    }
+                                    ]
                                   }
                                 }
                               },
@@ -10170,99 +10184,24 @@
                       {
                         "type": "object",
                         "properties": {
+                          "name": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
                           "organizationId": {
                             "type": "string"
                           },
                           "projectId": {
                             "type": "string"
                           },
-                          "gender": {
-                            "anyOf": [
-                              {
-                                "type": "string",
-                                "enum": [
-                                  "male",
-                                  "female",
-                                  "other"
-                                ]
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
                           "customAttribute": {},
-                          "firstName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "lastName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "middleName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "userName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "profile": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "tenantId": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
                           "pinCode": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "location": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -10283,16 +10222,6 @@
                             ]
                           },
                           "countryCode": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "dateOfBirth": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -10376,10 +10305,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "firstName",
-                "lastName",
                 "uniqueCustomerId",
-                "userName",
+                "name",
                 "emailId",
                 "phoneNumber"
               ]
@@ -10445,9 +10372,7 @@
                         "required": [
                           "id",
                           "uniqueCustomerId",
-                          "firstName",
-                          "lastName",
-                          "userName",
+                          "name",
                           "emailId",
                           "phoneNumber",
                           "isActive",
@@ -10460,27 +10385,7 @@
                           "uniqueCustomerId": {
                             "type": "string"
                           },
-                          "firstName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "lastName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "userName": {
+                          "name": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -10842,6 +10747,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
                   "country": {
                     "anyOf": [
                       {
@@ -10882,72 +10797,7 @@
                       }
                     ]
                   },
-                  "dateOfBirth": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
                   "emailId": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "firstName": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "gender": {
-                    "anyOf": [
-                      {
-                        "type": "string",
-                        "enum": [
-                          "male",
-                          "female",
-                          "other"
-                        ]
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "lastName": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "location": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "middleName": {
                     "anyOf": [
                       {
                         "type": "string"
@@ -10968,36 +10818,6 @@
                     ]
                   },
                   "pinCode": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "profile": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "tenantId": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "userName": {
                     "anyOf": [
                       {
                         "type": "string"
@@ -13789,10 +13609,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                "firstName",
-                "lastName",
                 "uniqueCustomerId",
-                "userName",
+                "name",
                 "emailId",
                 "phoneNumber"
               ]
@@ -13850,9 +13668,7 @@
                         "required": [
                           "id",
                           "uniqueCustomerId",
-                          "firstName",
-                          "lastName",
-                          "userName",
+                          "name",
                           "emailId",
                           "phoneNumber",
                           "isActive",
@@ -13865,27 +13681,7 @@
                           "uniqueCustomerId": {
                             "type": "string"
                           },
-                          "firstName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "lastName": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "userName": {
+                          "name": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -23924,12 +23720,8 @@
   ],
   "servers": [
     {
-      "url": "https://dev-api-service-718412652823.asia-south1.run.app/api/v1/dokaai",
-      "description": "Production"
-    },
-    {
-      "url": "http://localhost:3009/api/v1/dokaai",
-      "description": "Local"
+      "url": "https://api.dokaai.com/api/v1/dokaai",
+      "description": "Production Server"
     }
   ]
 }
