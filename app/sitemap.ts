@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { getMetadataBase } from '@/lib/metadata';
+import { withBasePath } from '@/lib/shared';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const metadataBase = getMetadataBase();
@@ -13,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   return Array.from(sitemapEntries.entries()).map(([url, lastModified]) => ({
-    url: new URL(url, metadataBase).toString(),
+    url: new URL(withBasePath(url), metadataBase).toString(),
     lastModified,
   }));
 }
