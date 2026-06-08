@@ -3,7 +3,7 @@ function normalizeSiteUrl(value: string) {
 }
 
 export function getMetadataBase() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dokaai.com/documentation';
 
   return new URL(normalizeSiteUrl(siteUrl));
 }
