@@ -10135,7 +10135,6 @@
                           "projectId": {
                             "type": "string"
                           },
-                          "customAttribute": {},
                           "pinCode": {
                             "anyOf": [
                               {
@@ -23769,12 +23768,16 @@
                       "type": "object",
                       "required": [
                         "planName",
+                        "planId",
                         "currentUsagePeriodTimeline",
                         "subscriptionServiceType",
                         "summary"
                       ],
                       "properties": {
                         "planName": {
+                          "type": "string"
+                        },
+                        "planId": {
                           "type": "string"
                         },
                         "currentUsagePeriodTimeline": {
@@ -23941,7 +23944,7 @@
   ],
   "servers": [
     {
-      "url": "https://api.dokaai.com/api/v1/dokaai",
+      "url": "http://api.dokaai.com/api/v1/dokaai",
       "description": "Production Server"
     }
   ]
