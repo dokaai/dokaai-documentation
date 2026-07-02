@@ -1,4 +1,4 @@
-import { ApiSidebarFolder } from '@/components/api-sidebar-folder';
+import { ApiSidebarFolder, ApiSidebarSearch } from '@/components/api-sidebar-folder';
 import { source } from '@/lib/source';
 import { DocsFooter } from '@/components/docs-footer';
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
@@ -33,6 +33,7 @@ export default async function Layout({
         sidebar={
           isApiReferencePage
             ? {
+                banner: ApiSidebarSearch,
                 components: {
                   Folder: ApiSidebarFolder,
                 },
