@@ -5212,6 +5212,7 @@
                         "type": "object",
                         "required": [
                           "id",
+                          "handlerKey",
                           "handlerId",
                           "name",
                           "description",
@@ -5228,7 +5229,13 @@
                           "id": {
                             "type": "string"
                           },
+                          "handlerKey": {
+                            "description": "Stable business identifier for the notification handler.",
+                            "type": "string"
+                          },
                           "handlerId": {
+                            "deprecated": true,
+                            "description": "Deprecated business identifier. Use handlerKey instead.",
                             "type": "string"
                           },
                           "name": {
@@ -5528,6 +5535,7 @@
                       "type": "object",
                       "required": [
                         "id",
+                        "handlerKey",
                         "notificationHandlerId",
                         "basicDetails",
                         "notificationType",
@@ -5544,7 +5552,13 @@
                         "id": {
                           "type": "string"
                         },
+                        "handlerKey": {
+                          "description": "Stable business identifier for the notification handler.",
+                          "type": "string"
+                        },
                         "notificationHandlerId": {
+                          "deprecated": true,
+                          "description": "Deprecated business identifier. Use handlerKey instead. This field does not contain the notification handler UUID.",
                           "type": "string"
                         },
                         "basicDetails": {
@@ -15711,6 +15725,7 @@
                                     "id",
                                     "name",
                                     "description",
+                                    "handlerKey",
                                     "handlerId"
                                   ],
                                   "properties": {
@@ -15723,7 +15738,13 @@
                                     "description": {
                                       "type": "string"
                                     },
+                                    "handlerKey": {
+                                      "description": "Stable business identifier for the notification handler.",
+                                      "type": "string"
+                                    },
                                     "handlerId": {
+                                      "deprecated": true,
+                                      "description": "Deprecated business identifier. Use handlerKey instead.",
                                       "type": "string"
                                     }
                                   }
@@ -16437,6 +16458,7 @@
                                     "id",
                                     "name",
                                     "description",
+                                    "handlerKey",
                                     "handlerId"
                                   ],
                                   "properties": {
@@ -16449,7 +16471,13 @@
                                     "description": {
                                       "type": "string"
                                     },
+                                    "handlerKey": {
+                                      "description": "Stable business identifier for the notification handler.",
+                                      "type": "string"
+                                    },
                                     "handlerId": {
+                                      "deprecated": true,
+                                      "description": "Deprecated business identifier. Use handlerKey instead.",
                                       "type": "string"
                                     }
                                   }
