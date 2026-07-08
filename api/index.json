@@ -115,7 +115,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                       "type": "string"
                                     }
                                   ]
@@ -185,7 +184,6 @@
                                       "type": "string"
                                     },
                                     "baseDate": {
-                                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                       "type": "string"
                                     },
                                     "direction": {
@@ -245,7 +243,6 @@
                                             "type": "string"
                                           },
                                           {
-                                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                             "type": "string"
                                           }
                                         ]
@@ -315,7 +312,6 @@
                                             "type": "string"
                                           },
                                           "baseDate": {
-                                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                             "type": "string"
                                           },
                                           "direction": {
@@ -476,7 +472,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                       "type": "string"
                                     }
                                   ]
@@ -546,7 +541,6 @@
                                       "type": "string"
                                     },
                                     "baseDate": {
-                                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                       "type": "string"
                                     },
                                     "direction": {
@@ -606,7 +600,6 @@
                                             "type": "string"
                                           },
                                           {
-                                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                             "type": "string"
                                           }
                                         ]
@@ -676,7 +669,6 @@
                                             "type": "string"
                                           },
                                           "baseDate": {
-                                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                             "type": "string"
                                           },
                                           "direction": {
@@ -5220,6 +5212,7 @@
                         "type": "object",
                         "required": [
                           "id",
+                          "handlerKey",
                           "handlerId",
                           "name",
                           "description",
@@ -5236,7 +5229,13 @@
                           "id": {
                             "type": "string"
                           },
+                          "handlerKey": {
+                            "description": "Stable business identifier for the notification handler.",
+                            "type": "string"
+                          },
                           "handlerId": {
+                            "deprecated": true,
+                            "description": "Deprecated business identifier. Use handlerKey instead.",
                             "type": "string"
                           },
                           "name": {
@@ -5536,6 +5535,7 @@
                       "type": "object",
                       "required": [
                         "id",
+                        "handlerKey",
                         "notificationHandlerId",
                         "basicDetails",
                         "notificationType",
@@ -5552,7 +5552,13 @@
                         "id": {
                           "type": "string"
                         },
+                        "handlerKey": {
+                          "description": "Stable business identifier for the notification handler.",
+                          "type": "string"
+                        },
                         "notificationHandlerId": {
+                          "deprecated": true,
+                          "description": "Deprecated business identifier. Use handlerKey instead. This field does not contain the notification handler UUID.",
                           "type": "string"
                         },
                         "basicDetails": {
@@ -5789,37 +5795,187 @@
                                 "sms": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "in_app": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "email": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "chat": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "push": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "whatsApp": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 }
                               }
@@ -5830,37 +5986,187 @@
                                 "sms": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "in_app": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "email": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "chat": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "push": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 },
                                 "whatsApp": {
                                   "type": "array",
                                   "items": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 }
                               }
@@ -6139,6 +6445,971 @@
           }
         },
         "description": "Get a notification handler by id."
+      }
+    },
+    "/nudge/projects/{projectId}/notification-handlers/key/{handlerKey}": {
+      "get": {
+        "tags": [
+          "Notification Handlers"
+        ],
+        "operationId": "getNotificationHandlerByKey",
+        "summary": "Get Notification Handler By Key",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "handlerKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data",
+                    "metaData",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "handlerKey",
+                        "notificationHandlerId",
+                        "basicDetails",
+                        "notificationType",
+                        "notificationSubtype",
+                        "priority",
+                        "channelAndTemplateDetails",
+                        "publishedTemplateAttributes",
+                        "customerPreference",
+                        "notificationHandlerRecipient",
+                        "notificationHandlerScheduleId",
+                        "isPublished"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "handlerKey": {
+                          "description": "Stable business identifier for the notification handler.",
+                          "type": "string"
+                        },
+                        "notificationHandlerId": {
+                          "deprecated": true,
+                          "description": "Deprecated business identifier. Use handlerKey instead. This field does not contain the notification handler UUID.",
+                          "type": "string"
+                        },
+                        "basicDetails": {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "description",
+                            "isRealTime",
+                            "isComplete",
+                            "handlerStatus",
+                            "projectId",
+                            "organizationId",
+                            "customerPool",
+                            "notificationType",
+                            "notificationSubtype"
+                          ],
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "isRealTime": {
+                              "type": "boolean"
+                            },
+                            "isComplete": {
+                              "type": "boolean"
+                            },
+                            "handlerStatus": {
+                              "type": "string",
+                              "enum": [
+                                "draft",
+                                "validated",
+                                "live"
+                              ]
+                            },
+                            "projectId": {
+                              "type": "string"
+                            },
+                            "organizationId": {
+                              "type": "string"
+                            },
+                            "customerPool": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "name",
+                                "description"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "notificationType": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "name"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "notificationSubtype": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "id",
+                                    "name"
+                                  ],
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "notificationType": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "notificationSubtype": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "name"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "priority": {
+                          "type": "number"
+                        },
+                        "channelAndTemplateDetails": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "in_app",
+                                "email",
+                                "sms",
+                                "chat",
+                                "push",
+                                "whatsApp"
+                              ],
+                              "properties": {
+                                "in_app": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "email": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "sms": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "chat": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "push": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "whatsApp": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {}
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "publishedTemplateAttributes": {
+                          "type": "object",
+                          "properties": {
+                            "template": {
+                              "type": "object",
+                              "properties": {
+                                "sms": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "in_app": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "email": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "chat": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "push": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "whatsApp": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "personalized": {
+                              "type": "object",
+                              "properties": {
+                                "sms": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "in_app": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "email": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "chat": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "push": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "whatsApp": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "required": [
+                                      "fieldName",
+                                      "fieldType"
+                                    ],
+                                    "properties": {
+                                      "fieldName": {
+                                        "type": "string"
+                                      },
+                                      "fieldType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string",
+                                          "number",
+                                          "boolean",
+                                          "date",
+                                          "dateTime"
+                                        ]
+                                      },
+                                      "fieldDisplayName": {
+                                        "type": "string"
+                                      },
+                                      "attributeId": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "customerPreference": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "customerPreferenceGroup",
+                                "customerPreferenceTopic"
+                              ],
+                              "properties": {
+                                "customerPreferenceGroup": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "description",
+                                        "channels"
+                                      ],
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "channels": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "enum": [
+                                              "in_app",
+                                              "email",
+                                              "sms",
+                                              "chat",
+                                              "push",
+                                              "whatsApp"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "customerPreferenceTopic": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "description",
+                                        "channels"
+                                      ],
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "channels": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "enum": [
+                                              "in_app",
+                                              "email",
+                                              "sms",
+                                              "chat",
+                                              "push",
+                                              "whatsApp"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "notificationHandlerRecipient": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "recipientSourceType",
+                                "recipientSource"
+                              ],
+                              "properties": {
+                                "recipientSourceType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "payload_based",
+                                    "target_audience_list",
+                                    "cohort_segment"
+                                  ]
+                                },
+                                "recipientSource": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "description"
+                                      ],
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "notificationHandlerScheduleId": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "isPublished": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "metaData": {
+                      "type": "null"
+                    },
+                    "error": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get a notification handler by its handler key."
       }
     },
     "/nudge/projects/{projectId}/notification-handlers/{notificationHandlerId}/events": {
@@ -7185,8 +8456,27 @@
                                 "type": "string"
                               }
                             },
-                            "dynamicVariables": {},
-                            "templateVariables": {},
+                            "computedVariables": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "name",
+                                  "formula"
+                                ],
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "formula": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
                             "channelType": {
                               "type": "string",
                               "enum": [
@@ -7647,6 +8937,62 @@
                         {
                           "type": "object",
                           "properties": {
+                            "dynamicVariables": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "fieldName",
+                                  "fieldType"
+                                ],
+                                "properties": {
+                                  "fieldName": {
+                                    "type": "string"
+                                  },
+                                  "fieldType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "date",
+                                      "dateTime"
+                                    ]
+                                  },
+                                  "fieldDisplayName": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "templateVariables": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "fieldName",
+                                  "fieldType"
+                                ],
+                                "properties": {
+                                  "fieldName": {
+                                    "type": "string"
+                                  },
+                                  "fieldType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "date",
+                                      "dateTime"
+                                    ]
+                                  },
+                                  "fieldDisplayName": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
                             "handlerChannelTemplateProviderSyncState": {
                               "type": "string",
                               "enum": [
@@ -10061,6 +11407,7 @@
                 ],
                 "properties": {
                   "customerData": {
+                    "type": "object",
                     "allOf": [
                       {
                         "type": "object",
@@ -10124,64 +11471,6 @@
                         }
                       },
                       {
-                        "anyOf": [
-                          {
-                            "type": "object",
-                            "required": [
-                              "emailId"
-                            ],
-                            "properties": {
-                              "emailId": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          {
-                            "type": "object",
-                            "required": [
-                              "phoneNumber"
-                            ],
-                            "properties": {
-                              "phoneNumber": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          {
-                            "type": "object",
-                            "required": [
-                              "iosDeviceTokens"
-                            ],
-                            "properties": {
-                              "iosDeviceTokens": {
-                                "type": "array",
-                                "items": {
-                                  "minLength": 1,
-                                  "pattern": "^(?!\\s*$)[^,]+$",
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          },
-                          {
-                            "type": "object",
-                            "required": [
-                              "androidDeviceTokens"
-                            ],
-                            "properties": {
-                              "androidDeviceTokens": {
-                                "type": "array",
-                                "items": {
-                                  "minLength": 1,
-                                  "pattern": "^(?!\\s*$)[^,]+$",
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        ]
-                      },
-                      {
                         "type": "object",
                         "properties": {
                           "name": {
@@ -10200,7 +11489,6 @@
                           "projectId": {
                             "type": "string"
                           },
-                          "customAttribute": {},
                           "pinCode": {
                             "anyOf": [
                               {
@@ -10211,17 +11499,7 @@
                               }
                             ]
                           },
-                          "country": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "countryCode": {
+                          "countryIsoCode": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -10757,7 +12035,7 @@
                       }
                     ]
                   },
-                  "country": {
+                  "countryIsoCode": {
                     "anyOf": [
                       {
                         "type": "string"
@@ -10829,16 +12107,6 @@
                   },
                   "timeZone": {
                     "type": "string"
-                  },
-                  "countryCode": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
                   }
                 }
               }
@@ -11099,6 +12367,252 @@
         "description": "Get a customer in a pool by id."
       }
     },
+    "/customer/projects/{projectId}/customer-pools/{customerPoolId}/custom-attributes/prepare": {
+      "post": {
+        "tags": [
+          "Customer Pools"
+        ],
+        "operationId": "prepareCustomerPoolAttributes",
+        "summary": "Prepare Customer Pool Attributes",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customerPoolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data",
+                    "metaData",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "sourceFieldName",
+                          "fieldDisplayName",
+                          "fieldName",
+                          "fieldType",
+                          "attributeType",
+                          "isNew",
+                          "isValid",
+                          "isDuplicateSuggestion"
+                        ],
+                        "properties": {
+                          "sourceFieldName": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "fieldDisplayName": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "fieldName": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "fieldType": {
+                            "type": "string",
+                            "enum": [
+                              "string",
+                              "number",
+                              "boolean",
+                              "date",
+                              "dateTime",
+                              "array",
+                              "json"
+                            ]
+                          },
+                          "attributeType": {
+                            "type": "string",
+                            "enum": [
+                              "CUSTOM",
+                              "APP"
+                            ]
+                          },
+                          "isNew": {
+                            "type": "boolean"
+                          },
+                          "isValid": {
+                            "type": "boolean"
+                          },
+                          "isDuplicateSuggestion": {
+                            "type": "boolean"
+                          },
+                          "validationReason": {
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "metaData": {
+                      "type": "null"
+                    },
+                    "error": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {},
+                    "metaData": {},
+                    "error": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Prepare customer pool attributes from imported or provided attribute names.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "attributeList"
+                ],
+                "properties": {
+                  "attributeList": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/customer/projects/{projectId}/customer-pools/{customerPoolId}/custom-attributes": {
       "post": {
         "tags": [
@@ -11151,13 +12665,82 @@
                     "data": {
                       "type": "object",
                       "required": [
-                        "attributeIds"
+                        "attributes"
                       ],
                       "properties": {
-                        "attributeIds": {
+                        "attributes": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "fieldName",
+                              "fieldDisplayName",
+                              "fieldDescription",
+                              "fieldType",
+                              "organizationId",
+                              "customerPoolId",
+                              "isMandatory",
+                              "createdById",
+                              "createdDate",
+                              "modifiedById",
+                              "modifiedDate",
+                              "isActive",
+                              "isDeleted"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "fieldName": {
+                                "type": "string"
+                              },
+                              "fieldDisplayName": {
+                                "type": "string"
+                              },
+                              "fieldDescription": {
+                                "type": "string"
+                              },
+                              "fieldType": {
+                                "type": "string",
+                                "enum": [
+                                  "string",
+                                  "number",
+                                  "boolean",
+                                  "date",
+                                  "dateTime"
+                                ]
+                              },
+                              "organizationId": {
+                                "type": "string"
+                              },
+                              "customerPoolId": {
+                                "type": "string"
+                              },
+                              "isMandatory": {
+                                "type": "boolean"
+                              },
+                              "createdById": {
+                                "type": "string"
+                              },
+                              "createdDate": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "modifiedById": {
+                                "type": "string"
+                              },
+                              "modifiedDate": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "isActive": {
+                                "type": "boolean"
+                              },
+                              "isDeleted": {
+                                "type": "boolean"
+                              }
+                            }
                           }
                         }
                       }
@@ -11276,6 +12859,7 @@
           "content": {
             "application/json": {
               "schema": {
+                "additionalProperties": false,
                 "type": "object",
                 "required": [
                   "customAttributes"
@@ -11284,6 +12868,7 @@
                   "customAttributes": {
                     "type": "array",
                     "items": {
+                      "additionalProperties": false,
                       "type": "object",
                       "required": [
                         "fieldName",
@@ -11307,11 +12892,11 @@
                             "string",
                             "number",
                             "boolean",
-                            "date"
+                            "date",
+                            "dateTime"
                           ]
                         }
-                      },
-                      "additionalProperties": false
+                      }
                     }
                   }
                 }
@@ -12496,12 +14081,9 @@
                               "number",
                               "boolean",
                               "date",
-                              "string",
-                              "number",
+                              "dateTime",
                               "array",
-                              "json",
-                              "boolean",
-                              "date"
+                              "json"
                             ]
                           },
                           "attributeType": {
@@ -15483,6 +17065,7 @@
                                     "id",
                                     "name",
                                     "description",
+                                    "handlerKey",
                                     "handlerId"
                                   ],
                                   "properties": {
@@ -15495,7 +17078,13 @@
                                     "description": {
                                       "type": "string"
                                     },
+                                    "handlerKey": {
+                                      "description": "Stable business identifier for the notification handler.",
+                                      "type": "string"
+                                    },
                                     "handlerId": {
+                                      "deprecated": true,
+                                      "description": "Deprecated business identifier. Use handlerKey instead.",
                                       "type": "string"
                                     }
                                   }
@@ -16209,6 +17798,7 @@
                                     "id",
                                     "name",
                                     "description",
+                                    "handlerKey",
                                     "handlerId"
                                   ],
                                   "properties": {
@@ -16221,7 +17811,13 @@
                                     "description": {
                                       "type": "string"
                                     },
+                                    "handlerKey": {
+                                      "description": "Stable business identifier for the notification handler.",
+                                      "type": "string"
+                                    },
                                     "handlerId": {
+                                      "deprecated": true,
+                                      "description": "Deprecated business identifier. Use handlerKey instead.",
                                       "type": "string"
                                     }
                                   }
@@ -18305,7 +19901,6 @@
                                               "type": "string"
                                             },
                                             {
-                                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                               "type": "string"
                                             }
                                           ]
@@ -18375,7 +19970,6 @@
                                               "type": "string"
                                             },
                                             "baseDate": {
-                                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                               "type": "string"
                                             },
                                             "direction": {
@@ -18435,7 +20029,6 @@
                                                     "type": "string"
                                                   },
                                                   {
-                                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                     "type": "string"
                                                   }
                                                 ]
@@ -18505,7 +20098,6 @@
                                                     "type": "string"
                                                   },
                                                   "baseDate": {
-                                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                     "type": "string"
                                                   },
                                                   "direction": {
@@ -18920,7 +20512,6 @@
                                                         "type": "string"
                                                       },
                                                       {
-                                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                         "type": "string"
                                                       }
                                                     ]
@@ -18990,7 +20581,6 @@
                                                         "type": "string"
                                                       },
                                                       "baseDate": {
-                                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                         "type": "string"
                                                       },
                                                       "direction": {
@@ -19050,7 +20640,6 @@
                                                               "type": "string"
                                                             },
                                                             {
-                                                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                               "type": "string"
                                                             }
                                                           ]
@@ -19120,7 +20709,6 @@
                                                               "type": "string"
                                                             },
                                                             "baseDate": {
-                                                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
                                                               "type": "string"
                                                             },
                                                             "direction": {
@@ -23548,12 +25136,16 @@
                       "type": "object",
                       "required": [
                         "planName",
+                        "planId",
                         "currentUsagePeriodTimeline",
                         "subscriptionServiceType",
                         "summary"
                       ],
                       "properties": {
                         "planName": {
+                          "type": "string"
+                        },
+                        "planId": {
                           "type": "string"
                         },
                         "currentUsagePeriodTimeline": {
