@@ -95,10 +95,10 @@ jobs:
         if: steps.check-image.outputs.exists != 'true'
         shell: bash
         env:
-          WEB_APP_ENV_SECRET: ${{ secrets.WEB_APP_ENV_SECRET }}
+          DOCS_ENV_SECRET: ${{ secrets.AZURE_DOCS_ENV_SECRET }}
         run: |
           set -euo pipefail
-          printf '%s' "$WEB_APP_ENV_SECRET" > .env.production
+          printf '%s' "$DOCS_ENV_SECRET" > .env.production
 
       - name: Build and Push Container
         if: steps.check-image.outputs.exists != 'true'
