@@ -164,7 +164,7 @@ auth: {
 import { io } from 'socket.io-client';
 
 const socket = io('http://localhost:3000', {
-  path: '/api/v1/wss/socket.io',
+  path: '/v1/wss/socket.io',
   transports: ['websocket'],
   auth: {
     token: `Bearer ${token}`
