@@ -1,5 +1,5 @@
 export const appName = 'Dokaai Documentation';
-export const docsBasePath: string = '/documentation';
+export const docsBasePath: string = '/';
 export const docsRoute = '';
 
 export function withBasePath(path: string) {
