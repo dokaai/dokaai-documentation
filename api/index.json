@@ -25312,7 +25312,7 @@
   ],
   "servers": [
     {
-      "url": "https://api.dokaai.com/api/dokaai",
+      "url": "https://api.dokaai.com/v1/dokaai",
       "description": "Production Server"
     }
   ]
