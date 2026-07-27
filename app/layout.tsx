@@ -11,6 +11,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
+  icons: {
+    icon: withBasePath('/icon.svg'),
+  },
 };
 
 export default function Layout({ children }: LayoutProps<'/'>) {

@@ -1,0 +1,38 @@
+---
+title: Organization
+description: A company or business account using DokaAI.
+---
+
+# Organization
+
+An organization is the main company account in DokaAI.
+
+It represents the business that owns projects, users, services, customer data, notifications, and billing relationships.
+
+## Detailed Description
+
+An organization is the highest-level business container in DokaAI. Everything a client does in the platform is connected back to an organization so that data, access, configuration, and billing stay separated from other companies.
+
+For a client, the organization is usually their company account. It is where administrators manage team access, create projects, enable product services, connect integrations, and review business activity across the workspace.
+
+Organizations are especially important when a client has multiple teams, departments, products, or environments. Instead of mixing all configuration together, the organization acts as the parent account and projects provide more specific workspaces underneath it.
+
+## Why It Matters
+
+Clients usually think of an organization as their DokaAI account. It is the top-level container for everything their team configures and operates.
+
+An organization helps separate one *company* from another. Users, projects, integrations, and service access should always be understood inside an organization boundary.
+
+## Common Use
+
+A client creates an organization when they start using DokaAI. After that, they can invite team members, create projects, enable services, configure notifications, and connect integrations under that organization.
+
+## Example
+
+Acme Healthcare signs up for DokaAI. Their organization contains projects for patient onboarding, appointment reminders, and marketing notifications. Team members are invited into the organization and then assigned to the projects they need.
+
+## Client-Facing API Notes
+
+Organization identifiers are commonly used by APIs that create projects, configure services, manage customers, connect providers, or read billing information.
+
+APIs should treat the organization as the ownership boundary for access control and data visibility.

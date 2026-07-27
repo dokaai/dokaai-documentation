@@ -56,11 +56,10 @@ export function DocsFooter() {
         <div className="max-w-[240px]">
           <Link href="/" className="inline-flex items-center gap-3">
             <img
-              src={withBasePath('/dokkai-logo.svg')}
+              src={withBasePath('/logos/logo-primary.svg')}
               alt="Dokaai"
-              className="h-8 w-auto shrink-0"
+              className="h-8 w-auto max-w-[150px] shrink-0"
             />
-            <span className="text-lg font-semibold tracking-[0.18em] text-fd-primary">DOKAAI</span>
           </Link>
           <p className="mt-5 text-sm leading-8 text-fd-foreground/80">
             The comprehensive notification platform tailored for developers
@@ -88,7 +87,7 @@ export function DocsFooter() {
       </div>
 
       <div className="mt-10 flex flex-col gap-5 border-t border-black/8 pt-6 text-sm text-fd-muted-foreground md:flex-row md:items-center md:justify-between">
-        <p>Copyright © 2024 Swift. All rights reserved</p>
+        <p>Copyright © 2024 Dokaai. All rights reserved</p>
         <div className="flex items-center gap-3">
           {socialLinks.map((item) => {
             const Icon = item.icon;
