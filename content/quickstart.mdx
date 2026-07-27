@@ -5,7 +5,8 @@ description: Set up your first Dokaai notification flow.
 
 # Quickstart
 
-This guide walks through the first Dokaai flow at a product level: create a project, connect a provider, configure a notification handler, and trigger a test notification.
+This guide walks through the first Dokaai flow at a product level: create a project,
+connect a provider, configure a notification handler, and trigger a test notification.
 
 ## Before you start
 
@@ -18,19 +19,25 @@ Make sure you have:
 
 ## Step 1: Open your workspace
 
-Start from the Dokaai workspace that owns your notification setup. A workspace groups the projects, members, services, and delivery configuration used by your team.
+Start from the Dokaai workspace that owns your notification setup. A workspace groups
+the projects, members, services, and delivery configuration used by your team.
 
-If you are still learning the product model, read [Workspace](/concepts/workspace) before wiring production flows.
+If you are still learning the product model, read [Workspace](/concepts/workspace)
+before wiring production flows.
 
 ## Step 2: Connect a provider
 
-Connect the provider you want to use for the first channel. For example, email, SMS, push, WhatsApp, chat, or in-app delivery.
+Connect the provider you want to use for the first channel. For example, email, SMS,
+push, WhatsApp, chat, or in-app delivery.
 
-Provider configuration usually includes credentials, sender details, and channel-specific settings. Keep provider credentials scoped to the right project or organization boundary.
+Provider configuration usually includes credentials, sender details, and
+channel-specific settings. Keep provider credentials scoped to the right project or
+organization boundary.
 
 ## Step 3: Create a notification handler
 
-A notification handler is the reusable unit that defines a notification flow. It should describe what is sent, which channels can deliver it, and how recipients are resolved.
+A notification handler is the reusable unit that defines a notification flow. It should
+describe what is sent, which channels can deliver it, and how recipients are resolved.
 
 For your first handler, keep the setup small:
 
@@ -41,9 +48,11 @@ For your first handler, keep the setup small:
 
 ## Step 4: Add recipient data
 
-Dokaai can send to direct recipients or audiences, depending on the flow you are building. For a quickstart, use a known test customer so the request is easy to verify.
+Dokaai can send to direct recipients or audiences, depending on the flow you are
+building. For a quickstart, use a known test customer so the request is easy to verify.
 
-If your flow depends on grouped audiences, review customer pools, target audience lists, cohort segments, and notification groups in [Core Concepts](/concepts).
+If your flow depends on grouped audiences, review customer pools, target audience lists,
+cohort segments, and notification groups in [Core Concepts](/concepts).
 
 ## Step 5: Send a test notification
 
@@ -55,7 +64,9 @@ Start here:
 - [Authentication](/api-reference/authentication)
 - [Send Notification](/api-reference/endpoints/send-notification)
 
-Send the request from a controlled test environment first. Confirm the response status, delivery channel, recipient, and rendered message content before connecting the handler to a live product event.
+Send the request from a controlled test environment first. Confirm the response status,
+delivery channel, recipient, and rendered message content before connecting the handler
+to a live product event.
 
 ## Step 6: Add preferences and safeguards
 

@@ -1,17 +1,16 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig, withBasePath } from './shared';
+import { gitConfig, withBasePath } from './shared';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: (
-        <span className="flex items-center gap-2 text-sm font-semibold text-fd-foreground">
+        <span className="flex items-center">
           <img
-            src={withBasePath('/dokkai-logo.svg')}
+            src={withBasePath('/logos/logo-primary.svg')}
             alt="Dokaai"
-            className="size-10 shrink-0"
+            className="h-8 w-auto max-w-[150px] shrink-0"
           />
-          <span>{appName}</span>
         </span>
       ),
     },
