@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dokaai-openapi-spec:
-        specifier: ^0.1.10
-        version: 0.1.10
+        specifier: ^0.1.13
+        version: 0.1.13
       fumadocs-core:
         specifier: 16.8.4
         version: 16.8.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@1.11.0(react@19.2.5))(next@16.2.4(@babel/core@7.29.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(zod@4.3.6)
@@ -1580,6 +1580,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -1927,8 +1928,8 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
-  dokaai-openapi-spec@0.1.10:
-    resolution: {integrity: sha512-0wj3TK9CuTgcTmFNy/HfJWyQtoTHCMfVgfpnEA6kXyQl/JLlCxxozrlbURCLN/wNUKNib2QyG0yhOEP7rzCLDg==}
+  dokaai-openapi-spec@0.1.13:
+    resolution: {integrity: sha512-81asFlGz3IjZLVCNfXoQFii9nTc60Pu7kdjO34iIv4Xzkouz/8kALhYrpZYA+XhIcxGB+lGfKoyBeDlLgS3v/Q==}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -5240,7 +5241,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  dokaai-openapi-spec@0.1.10: {}
+  dokaai-openapi-spec@0.1.13: {}
 
   dunder-proto@1.0.1:
     dependencies:
