@@ -5,17 +5,24 @@
 
   "packageRules": [
     {
-      "matchPackageNames": ["dokaai-openapi-spec"],
-      "groupName": "DokaAI OpenAPI spec",
-      "matchUpdateTypes": ["patch"],
-      "rangeStrategy": "bump",
-      "automerge": true
+      "matchPackageNames": ["!dokaai-openapi-spec"],
+      "enabled": false
     },
+
     {
       "matchPackageNames": ["dokaai-openapi-spec"],
-      "groupName": "DokaAI OpenAPI spec",
+      "rangeStrategy": "bump"
+    },
+
+    {
+      "matchPackageNames": ["dokaai-openapi-spec"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+
+    {
+      "matchPackageNames": ["dokaai-openapi-spec"],
       "matchUpdateTypes": ["minor", "major"],
-      "rangeStrategy": "bump",
       "automerge": false
     }
   ]
