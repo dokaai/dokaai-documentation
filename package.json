@@ -13,7 +13,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "dokaai-openapi-spec": "^0.1.10",
+    "dokaai-openapi-spec": "^0.1.13",
     "fumadocs-core": "16.8.4",
     "fumadocs-mdx": "14.3.1",
     "fumadocs-openapi": "^10.8.1",
