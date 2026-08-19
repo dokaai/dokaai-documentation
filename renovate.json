@@ -1,0 +1,17 @@
+{
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["dokaai-openapi-spec"],
+      "groupName": "DokaAI OpenAPI spec",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["dokaai-openapi-spec"],
+      "groupName": "DokaAI OpenAPI spec",
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
+    }
+  ]
+}

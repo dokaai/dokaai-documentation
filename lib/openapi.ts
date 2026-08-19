@@ -1,9 +1,9 @@
 import { createOpenAPI } from 'fumadocs-openapi/server';
-import { readFileSync } from 'node:fs';
+import dokaaiOpenApiSpec from 'dokaai-openapi-spec';
 import { withBasePath } from '@/lib/shared';
 
 function getDokaaiOpenAPISchema() {
-  const schema = JSON.parse(readFileSync('./api/index.json', 'utf8'));
+  const schema = dokaaiOpenApiSpec as any;
   const declaredTags = new Set((schema.tags ?? []).map((tag: { name: string }) => tag.name));
   const tags = [...(schema.tags ?? [])];
 

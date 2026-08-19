@@ -12,7 +12,6 @@ on:
       - "lib/**"
       - "public/**"
       - "scripts/**"
-      - "api/**"
       - "Dockerfile"
       - "eslint.config.mjs"
       - "next.config.mjs"
