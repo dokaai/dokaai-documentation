@@ -1,0 +1,27 @@
+---
+title: Firebase Cloud Messaging integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare a Firebase project, register the client application, and configure the app to obtain device registration tokens.
+
+## Connect Firebase Cloud Messaging
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **Firebase Cloud Messaging**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the push channel for your notification handler.
+
+## Verify delivery
+
+Send to a current token from the intended Firebase project and verify notification permission on the device.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check Firebase project alignment, token freshness, device permission, and the provider response. Apple devices also need the appropriate APNs setup in Firebase.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.

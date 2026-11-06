@@ -1,0 +1,27 @@
+---
+title: Azure Communication Services integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare an Azure Communication Services resource with messaging enabled for your intended destination.
+
+## Connect Azure Communication Services
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **Azure Communication Services**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the messaging channel for your notification handler.
+
+## Verify delivery
+
+Confirm your Azure resource, sender, and destination are configured for the intended messaging use case.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check the Azure resource and delivery logs, including region and sender eligibility.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.

@@ -1,0 +1,27 @@
+---
+title: Infobip Email integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare an Infobip account with email enabled, the appropriate account credentials, and a configured sending identity.
+
+## Connect Infobip Email
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **Infobip Email**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the email channel for your notification handler.
+
+## Verify delivery
+
+Check the sending identity and the message report in your Infobip portal.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check the Infobip account, sending domain, authentication, and the reported delivery status.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.
