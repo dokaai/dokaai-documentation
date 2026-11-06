@@ -1,0 +1,27 @@
+---
+title: RingCentral integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare a RingCentral account and an application or credentials with access to a messaging-capable number.
+
+## Connect RingCentral
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **RingCentral**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the SMS channel for your notification handler.
+
+## Verify delivery
+
+Verify the selected number can send SMS to the test destination and inspect RingCentral message activity.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check application authorization, account permissions, number capability, and destination restrictions.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.

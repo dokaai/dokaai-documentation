@@ -2,10 +2,5 @@
   "title": "Integration",
   "root": true,
   "icon": "Plug",
-  "pages": [
-    "index",
-    "---Channels---",
-    "email",
-    "webhooks"
-  ]
+  "pages": ["index"]
 }
