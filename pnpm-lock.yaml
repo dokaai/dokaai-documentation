@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dokaai-openapi-spec:
-        specifier: ^0.1.19
-        version: 0.1.19
+        specifier: ^0.1.20
+        version: 0.1.20
       fumadocs-core:
         specifier: 16.8.4
         version: 16.8.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react@19.3.0)(lucide-react@1.69.0(@types/react@19.3.0)(react@19.3.1))(next@16.2.4(@babel/core@7.29.13)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)
@@ -1781,8 +1781,8 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
-  dokaai-openapi-spec@0.1.19:
-    resolution: {integrity: sha512-E4B2I2JKUu3Qh8l1cPtBAGzDWKbrxcdWgXzcE5wHDjHdid9mDvpVujzKQccgarrM4HunGdhihpWW7svmS030Dw==}
+  dokaai-openapi-spec@0.1.20:
+    resolution: {integrity: sha512-dKESWLDQ/FyBmRDa9aGNUbyPZvf353C3UPEiZrvJ60RYnlAcUYuEJUb4XRyXNtDiHWGXNV/zOhDCIxo3CU2eiw==}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -5029,7 +5029,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  dokaai-openapi-spec@0.1.19: {}
+  dokaai-openapi-spec@0.1.20: {}
 
   dunder-proto@1.0.1:
     dependencies:
