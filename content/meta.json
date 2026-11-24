@@ -1,11 +1,14 @@
 {
   "pages": [
     "index",
-    "---Getting Started---",
-    "quickstart",
+    "onboarding",
     "concepts",
-    "---Reference---",
-    "integration",
-    "api-reference"
+    "account",
+    "authentication",
+    "channels-and-templates",
+    "customers",
+    "developers",
+    "build",
+    "in-app-inbox"
   ]
 }

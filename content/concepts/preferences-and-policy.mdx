@@ -1,0 +1,28 @@
+---
+title: "Customer Preferences"
+description: "Understand who receives a notification, which communication choices apply, and what send rules control."
+---
+
+Recipient selection, customer preferences and send policy answer different questions. Configure each deliberately when building a notification.
+
+| Concern | Question | Example |
+| --- | --- | --- |
+| Audience | Who is targeted? | Customers in a target list |
+| Preference group/topic | Which communication choice is associated with this message? | Product updates within an account-updates group |
+| Customer preference | What choice has this customer saved? | A customer disables a topic/channel |
+| Handler preference association | Which preference mode and group/topic does this handler use? | A product-update handler refers to its topic |
+| Send policy | Which organization rules are configured for this notification type and channel? | Quiet hours for marketing email |
+
+Selecting a customer into an audience and saving their communication choice are separate actions. See [Customers and audiences](/concepts/customers-and-audiences).
+
+## Notification types and subtypes
+
+Send Policy separates **Marketing**, **Transactional** and **Services** notification kinds, then channel-specific settings. A subtype is a more specific category within a notification kind and can participate in the configured DND bypass selection. Review the handler's type and subtype when investigating which settings apply.
+
+The Services notification kind is a classification, separate from [subscribing to a Dokaai service](/concepts/services).
+
+## Quiet hours and frequency caps
+
+DND means Do Not Disturb: a quiet-hours window with a timezone and an action such as Delay or Drop. The dashboard also shows organization and per-user frequency-cap sections. Those cap sections are currently **Preview Only**: editing and cap enforcement are not active. Do not rely on them as send limits.
+
+[Configure send policy](/preferences/send-policy) explains the available controls. Start customer-choice setup with [groups/topics](/preferences/groups-and-topics) and [handler preferences](/preferences/groups-and-topics#handler-preferences). Use [Events](/operations/events) to inspect a particular execution; the UI configuration alone does not establish precedence between every rule.

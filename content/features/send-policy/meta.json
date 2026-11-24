@@ -1,0 +1,12 @@
+{
+  "title": "Send Policy",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "marketing-compliance",
+    "country-examples",
+    "configuration",
+    "dnd-exceptions",
+    "handler-configuration"
+  ]
+}

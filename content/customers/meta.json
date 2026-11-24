@@ -1,0 +1,13 @@
+{
+  "title": "Customers & Audiences",
+  "defaultOpen": false,
+  "pages": [
+    "pools",
+    "attributes",
+    "sharing",
+    "add-customers",
+    "bulk-import",
+    "target-audience-lists",
+    "customer-cohorts"
+  ]
+}

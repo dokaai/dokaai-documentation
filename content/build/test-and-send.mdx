@@ -1,0 +1,38 @@
+---
+title: "Test and send notifications"
+description: "Prepare a controlled test, submit the handler trigger, and inspect its event."
+---
+
+Before sending, configure the handler's [channels](/build/channels), [templates](/build/templates) and [recipient source](/build/recipients). Review the handler and template publishing states. Use recipients you control for the first test.
+
+## Prepare the request
+
+1. Open the handler's send interface and select test or live mode deliberately.
+2. Review which channels are included.
+3. Enter the contacts and personalization values requested by the recipient form, or review the selected list/cohort criteria for the source in use.
+4. Supply shared template-variable values and correct any type-validation issues.
+5. Review the channel, recipients and data before submitting the trigger.
+
+Test mode is not a promise that a send is simulated or cannot contact a recipient. Check the actual recipient and channel before submitting either mode. The **Test Handler** flow forces the effective request mode to test, including its JSON/cURL payload. The send/trigger flow reviews the effective mode separately; do not treat a test/live choice as a separate isolated environment.
+
+## Review overrides, JSON and cURL
+
+The send interface offers three views:
+
+| View | Purpose |
+| --- | --- |
+| Override Configuration | Select the channels, recipients/criteria and values for this run |
+| Edit as JSON | Inspect or edit the request payload that will be submitted |
+| cURL | Review a generated request for a backend integration |
+
+Overrides describe the run's inputs and are visible in [event details](/operations/events). They are separate from saving the handler's reusable configuration. In the JSON view, keep the mode valid (`test` or `live`) and review every selected channel and recipient. The cURL command uses the effective payload and credential placeholders; use [API credentials](/account/api-credentials) on the backend when adapting it.
+
+Before a send/trigger, review the confirmation and type the requested handler identifier. The current confirmation checks the handler key even where the message calls it a handler ID. Use the value shown for that handler, not an unrelated name or project identifier. Review recipient counts and mode before confirming.
+
+## Inspect the outcome
+
+Record the returned event information and open the corresponding handler event. Check its reported channel results and verify receipt with your test recipient. An accepted trigger request and confirmed delivery are different observations.
+
+Use [Inspect notification events](/operations/events) to find the inspection path. For problems, start with [delivery investigation](/troubleshooting/delivery) or [template diagnostics](/troubleshooting/templates).
+
+A developer can use the configured handler from a backend through [application triggering](/developers/trigger-notifications).

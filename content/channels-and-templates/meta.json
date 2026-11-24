@@ -1,0 +1,11 @@
+{
+  "title": "Channels and Templates",
+  "defaultOpen": false,
+  "pages": [
+    "email",
+    "in-app",
+    "push",
+    "sms",
+    "whatsapp"
+  ]
+}

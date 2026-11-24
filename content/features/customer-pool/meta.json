@@ -1,0 +1,10 @@
+{
+  "title": "Customer Pool",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "pools",
+    "cohorts",
+    "target-audience-lists"
+  ]
+}

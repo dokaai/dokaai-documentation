@@ -1,0 +1,27 @@
+---
+title: "Configure recipients"
+description: "Select payload-based recipients, a target list, or a customer cohort."
+---
+
+Open an existing [handler](/build/handlers) and choose how its recipients are selected. The handler already has a customer-pool association from its basic details. Prepare the list/cohort audience objects needed by the recipient source you choose.
+
+| Source | Preparation | What to check before sending |
+| --- | --- | --- |
+| Payload-based | Contact and per-recipient values for the selected channels | Each supplied recipient has the intended contact data |
+| Target list | A [populated target list](/customers/target-lists) | The selected list and its membership |
+| Cohort | A [cohort with an assigned query](/customers/target-lists#cohorts) | The selected cohort and query sample |
+
+## Save and check the source
+
+1. Open the handler's recipient configuration.
+2. Select the source type and, for a list or cohort, the intended audience object.
+3. Save the selection and review it again before the next send.
+4. Use a controlled recipient when exercising the test flow; review any audience criteria separately from manually entered contacts.
+
+Per-recipient personalization values are different from shared template values. See [Template variables and personalization](/build/variables) when preparing the send data.
+
+Continue with [Test and send notifications](/build/test-and-send). The [Manage Handler Recipients](/api-reference/notification-handlers/manage-handler-recipients) operation provides the exact API contract.
+
+## Recipient data and scheduling
+
+Review the handler's message-frequency mode before changing recipient source; the setup flow can require a recipient-source change when switching frequency. For target-list and cohort sends, event diagnostics can report that explicit per-recipient dynamic values are unavailable for that criteria source. Use the persisted customer attributes and shared template data appropriate to those recipients. See [Event warnings](/operations/events) and [Template variables](/build/variables).

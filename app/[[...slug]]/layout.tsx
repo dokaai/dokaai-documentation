@@ -6,7 +6,7 @@ import { source } from '@/lib/source';
 import { DocsFooter } from '@/components/docs-footer';
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import { baseOptions } from '@/lib/layout.shared';
-import { docsTabs } from '@/lib/docs-tabs';
+import { getDocsTabs } from '@/lib/docs-tabs';
 import { getDocsOnlyPageTree } from '@/lib/page-tree';
 import { type ReactNode } from 'react';
 import { connection } from 'next/server';
@@ -28,12 +28,13 @@ export default async function Layout({
   const pageTree = source.getPageTree();
   const isApiReferencePage = resolvedParams.slug?.[0] === 'api-reference';
   const isIntegrationPage = resolvedParams.slug?.[0] === 'integration';
-  const isDocumentationPage = !isApiReferencePage && !isIntegrationPage;
+  const isFeaturesPage = resolvedParams.slug?.[0] === 'features';
+  const isDocumentationPage = !isApiReferencePage && !isIntegrationPage && !isFeaturesPage;
   const { nav, ...base } = baseOptions();
   const layoutProps = {
     ...base,
     tree: isDocumentationPage ? getDocsOnlyPageTree(pageTree) : pageTree,
-    tabs: docsTabs,
+    tabs: getDocsTabs(pageTree, source.getPages()),
     tabMode: 'navbar' as const,
     nav: { ...nav, mode: 'top' as const },
   };

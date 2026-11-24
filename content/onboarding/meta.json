@@ -1,0 +1,14 @@
+{
+  "title": "Onboarding",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "organization-and-service",
+    "provider-integration",
+    "send-policy",
+    "api-keys",
+    "project-creation",
+    "product-spaces",
+    "enable-service"
+  ]
+}

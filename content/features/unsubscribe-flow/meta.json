@@ -1,0 +1,9 @@
+{
+  "title": "Unsubscribe Flow",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "basic-flow",
+    "notification-controls"
+  ]
+}

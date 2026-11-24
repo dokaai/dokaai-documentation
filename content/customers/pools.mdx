@@ -1,0 +1,97 @@
+---
+title: "Customer Pool"
+description: "Create pools, manage customer contacts and attributes, and configure sharing and access."
+---
+
+A customer pool holds customer records and attributes available to your project. Choose the correct organization and project before working with customer data.
+
+## Create or choose a pool
+
+Open **Customers → Customer Pool** in the intended project. If you need a new project-owned pool, use **Create pool**, enter the customer-pool name and description, and choose **Create**. Then select the resulting pool. Existing organization or shared pools may also appear according to your access; [Shared pools](/customers/pools#shared-pools-and-access) explains ownership and access separately.
+
+A handler requires a pool association when it is created. For an initial payload-based test you do not need to populate a target list or cohort first, but you still need a pool available to select.
+
+## Inspect and maintain a pool
+
+1. Open the project's **Customers** area and select **Customer Pool**.
+2. Select the pool you want to work with and review its existing customer records and attributes.
+3. Use the available customer-management form to add or update a record. Supply its customer identifier and the contact/attribute values required by the form.
+4. Reopen or refresh the customer record to check the values that were saved.
+
+Use [Custom attributes](/customers/pools#custom-attributes) when the pool needs additional data fields. Use [Import customers](/customers/import) when preparing records from CSV.
+
+## Use pool records in an audience
+
+A pool and a notification audience are distinct objects. Create a [target list](/customers/target-lists) for explicit membership or a [cohort](/customers/target-lists#cohorts) for a query-based definition, then select that source in [handler recipients](/build/recipients).
+
+For API automation, the existing [List Project Customer Pools](/api-reference/customer-pools/get-all-customer-pool-in-project) and [Add Customers to Pool](/api-reference/customer-pools/add-customers-to-pool) operations own their exact contracts.
+
+## Identify a customer
+
+Use **Unique Customer ID** to keep the customer's identity consistent with your application, such as your own customer record identifier. The customer form also offers name, email, phone, timezone and other contact/profile fields, plus configured custom attributes. Supply contact data appropriate to the channel you will use; an email address and a customer identifier serve different purposes.
+
+After adding or updating a customer, reopen the record to verify it. Use controlled contact details for an initial test, and do not confuse a display name, unique customer identifier and internal record ID in API calls.
+
+## Prepare contacts for the selected channel
+
+Email, phone destinations, push contact points and customer identity are separate data. Fill the contact fields needed by the channel/provider, then check a controlled test recipient before using the audience.
+
+For push, the contact-point editor accepts multiple entries. Each entry needs a provider and a non-empty device token; the offered Android/iOS platform field is optional. The current editor offers Firebase Cloud Messaging, APNs and Expo provider choices. Check the existing [Integration directory](/integration) for actual provider availability and setup; a contact-field choice does not establish that an account's integration is configured.
+
+Keep device tokens private, review provider/token pairs when updating a device, and remove incomplete rows before saving. See [Configure recipients](/build/recipients) for the handler's recipient source and [In-app notifications](/developers/in-app) for the separate customer-inbox integration.
+
+## Custom attributes
+
+Custom attributes add fields to the customer data used by a pool. Start with a selected [customer pool](/customers/pools) and review its existing attributes before creating another field for the same data.
+
+### Define a field
+
+1. Open the pool's attribute-management controls.
+2. Enter a field name, display name, description and type as required by the form.
+3. For a new custom field, use a lowercase snake_case name, such as `account_tier`. Avoid names already used by another attribute.
+4. Save the field and check the resulting attribute definition.
+
+The field name identifies data used by imports and template references; the display name helps people recognize it in the dashboard. Review existing uses before renaming a field or changing its type.
+
+### Review import mappings
+
+When importing customer data, map each incoming column to the intended existing field or a new custom attribute. Resolve duplicate names and validation errors before continuing. App attributes and custom attributes are separate categories; do not create a custom duplicate just to bypass a mapping problem.
+
+Continue with [Import customers](/customers/import) or [Template variables and personalization](/build/variables). The existing [custom-attribute operation](/api-reference/customer-pools/add-customer-custom-attribute) provides the API contract.
+
+## Shared pools and access
+
+A shared pool gives a project access to customer records owned outside that project. Use it when several projects need an existing pool rather than copying the same customers into separate lists. A pool's ownership and a project's access to it are separate concerns.
+
+### Share through pool settings
+
+1. Open the pool's settings from a context allowed to manage it.
+2. Review the current project access list.
+3. Add the intended project and choose the access level offered by the form.
+4. Save, then review the resulting settings and the destination project's visibility.
+
+The settings offer labels such as Read Access, Write Access, No Access and Full Access. Use the permissions granted to your account and confirm the operations available in the receiving project; do not infer cross-organization authorization just from a pool appearing in a list.
+
+### Use a shared pool
+
+In the receiving project, open **Customers → Shared Pools**. The list identifies the pool and its associated source project or organization. Shared records still need the appropriate [audience configuration](/concepts/customers-and-audiences) when used by a handler.
+
+### Remove a shared association
+
+Use the shared pool's removal action, review the **Remove shared pool** confirmation, and check that the association is removed from the project afterward. This is an access/association task; do not treat it as a way to delete the owner's customer records. Review dependent lists, cohorts and handlers before removing access.
+
+See [Manage pools](/customers/pools), [Target lists](/customers/target-lists) and the existing [Remove Shared Pool from Project operation](/api-reference/customer-pools/remove-shared-pool-from-project).
+
+### Understand the pool permission levels
+
+The current dashboard uses these access checks for pool controls:
+
+| Access | View pool | Manage customer records and audience work | Manage custom attributes |
+| --- | --- | --- | --- |
+| Owner | Yes | Yes | Yes |
+| Read Access | Yes | No | No |
+| Write Access | Yes | Yes | No |
+| Full Access | Yes | Yes | Yes |
+| No Access | No | No | No |
+
+These pool permissions are separate from organization/project membership. The actions available to you also depend on your account authorization. Ask the pool owner for the appropriate access rather than creating a duplicate pool to work around a disabled control.

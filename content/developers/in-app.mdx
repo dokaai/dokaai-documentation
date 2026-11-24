@@ -1,0 +1,30 @@
+---
+title: "In-app notifications"
+description: "Build a customer inbox using notification retrieval, unread counts, and read-state APIs."
+---
+
+An in-app notification is content your application displays to an authenticated customer, such as an inbox entry or notification panel. Configure the handler's In App channel and template, then integrate the customer-facing API path into your application.
+
+## Prepare the notification and identity
+
+Use [channels](/build/channels), [templates](/build/templates) and [recipient configuration](/build/recipients) to prepare the notification. Use [Customer authentication](/developers/customer-authentication) for the customer bearer token and product-space identity context.
+
+## Build the inbox flow
+
+| Application action | Existing operation |
+| --- | --- |
+| Load a customer's notifications | [Get Customer In-App Notifications](/api-reference/in-app-notifications/get-customer-in-app-notifications) |
+| Load a selected entry | [Get In-App Notification By Id](/api-reference/in-app-notifications/get-in-app-notification-by-id) |
+| Show an unread badge | [Get Unread Count](/api-reference/in-app-notifications/get-unread-in-app-notification-count) |
+| Mark one entry read | [Set Notification As Read](/api-reference/in-app-notifications/set-in-app-notification-as-read) |
+| Mark all entries read | [Set All Notifications As Read](/api-reference/in-app-notifications/set-all-in-app-notifications-as-read) |
+
+Load the list with the pagination/filter parameters in the operation contract, render the returned content and handle loading, empty and error states. After a read action succeeds, refresh or reconcile the relevant entry and unread count. Decide deliberately when your application marks an entry read.
+
+## Test the experience
+
+Trigger a notification for a controlled customer, inspect the [handler event](/operations/events), fetch that customer's inbox and test read-state changes. A saved in-app entry and a user reading it are separate observations.
+
+The local demo also explores socket delivery. Confirm the supported socket/deployment contract before depending on live updates; notification-list and unread-count retrieval provide a separate API integration path. Do not treat the demo repository name as an installable SDK package.
+
+For customer communication controls, continue with [Customer preferences integration](/developers/customer-preferences).
