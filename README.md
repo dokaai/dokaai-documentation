@@ -46,10 +46,8 @@ resources:
 
 ### Provider integrations
 
-`NEXT_PUBLIC_DOCUMENTATION_URL` sets the public documentation origin and is
-passed as the only Docker build argument. Configure the matching GitHub
-environment secret for each deployment environment. Server-only settings use
-the same names as `.env.example` inside the `DOCS_ENV_SECRET` runtime secret.
+`NEXT_PUBLIC_DOCUMENTATION_URL` sets the public documentation origin for page
+metadata and defaults to `https://docs.dokaai.com`.
 
 The documentation server calls the same backend API used by dokaai-web:
 `GET <NUDGE_API_URL>/notification-providers/catalog`. Set `NUDGE_API_URL`
@@ -57,8 +55,12 @@ The documentation server calls the same backend API used by dokaai-web:
 `INTERNAL_ADMIN_SECRET_KEY`, and `DOKAAI_CALLER_SERVICE_ID` on the server. The
 caller service ID must be registered and authorized to request a token for the
 `dokaai` service. The server obtains that token from
-`POST <AUTH_API_URL>/auth/internal-service/token`, then calls the catalog
-with BFF authentication. None of these secrets are sent to the browser.
+`POST <AUTH_API_URL>/auth/internal-service/token` with the caller service ID and
+target service ID, authenticating the request with the
+`x-internal-admin-secret-key` header from `INTERNAL_ADMIN_SECRET_KEY`. It then
+calls the catalog with the returned Bearer token and BFF authentication. Both
+the admin key and the generated token remain on the server and are not sent
+to the browser.
 
 Provider pages also call `GET <NUDGE_API_URL>/notification-providers/catalog/<providerId>`
 for their configuration fields. Successful catalog and detail results are cached for five minutes; an unavailable or invalid
