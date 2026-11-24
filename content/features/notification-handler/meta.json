@@ -1,0 +1,12 @@
+{
+  "title": "Notification Handler",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "create-notification",
+    "recipients",
+    "channels-and-templates",
+    "preferences",
+    "type"
+  ]
+}

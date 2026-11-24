@@ -1,0 +1,11 @@
+{
+  "title": "Account & Teams",
+  "defaultOpen": false,
+  "pages": [
+    "access",
+    "members-and-roles",
+    "organization-billing",
+    "account-tiers",
+    "projects-product-spaces"
+  ]
+}

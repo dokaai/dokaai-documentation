@@ -1,89 +1,37 @@
 ---
-title: Overview
-description: Learn what Dokaai is and where to start.
+title: "Documentation home"
+description: "Understand the product, configure a notification, or connect your application."
 ---
 
-# Dokaai Documentation
+Dokaai brings notification handlers, channel templates, customer audiences and preferences into a shared dashboard. Start with the task you want to complete.
 
-Dokaai is a customer engagement and notification platform for building reliable,
-multi-channel communication workflows. It helps teams design notification handlers,
-connect delivery providers, manage customer audiences, and trigger messages from product
-events or backend systems.
+## New to Dokaai?
 
-Use these docs to understand the product model first, then connect integrations and move
-into the API reference when you are ready to automate.
+First, [sign in or accept your team invitation](/account/access). If you can already access the intended organization and project, continue with the concepts and setup below.
 
-## What Dokaai helps you build
+Start with [Core concepts](/concepts). An organization is your account, a project is where you configure notification work, a product space represents the app/brand, and a service is the Dokaai product you enable. A handler holds reusable notification configuration; an event records one run.
 
-Dokaai brings notification logic, audience targeting, delivery channels, and customer
-preferences into one workspace. Instead of spreading messaging rules across application
-code, provider dashboards, and one-off scripts, you can manage the core communication
-flow from a single product surface.
+For example, a shop can configure an order-confirmation handler once, then trigger it with the details of each new order. Templates define the content, recipients identify who to target, and preferences/send policy describe communication choices and configured send rules.
 
-Typical use cases include:
+Follow this setup sequence: [account and project setup](/account/setup), including service enablement and product-space association → [customer pool](/customers/pools) → [handler](/build/handlers). Revisit the relevant section as you complete each dashboard step.
 
-- Sending transactional alerts from product events.
-- Managing notification handlers for email, SMS, push, WhatsApp, chat, and in-app
-  channels.
-- Grouping customers into pools, target audience lists, cohorts, and segments.
-- Respecting customer preferences before delivery.
-- Connecting provider integrations without hardcoding provider-specific logic into every
-  workflow.
-- Tracking notification execution and delivery state across channels.
+## Send your first notification
 
-## Critical links
+Follow the [Quickstart](/quickstart) to configure a handler, send a test notification to a recipient you control and inspect its handler event. The walkthrough links to each configuration guide so you can continue without repeating setup.
 
-Start with the pages below when setting up or reviewing a Dokaai project.
+## Choose your path
 
-- [Quickstart](/quickstart): the shortest path to understand the workspace, configure a
-  handler, and send a test notification.
-- [Core Concepts](/concepts): product vocabulary and how the main Dokaai objects fit
-  together.
-- [Workspace](/concepts/workspace): how organizations, projects, members, and services
-  are organized.
-- [Integration Overview](/integration): where to connect Dokaai with channels,
-  providers, and external systems.
-- [API Reference](/api-reference): generated endpoint documentation for automating
-  Dokaai from your backend.
-- [Authentication](/api-reference/authentication): how API requests are authenticated.
-- [Send Notification](/api-reference/endpoints/send-notification): the main send
-  endpoint entry point.
+| Your task | Start here | Continue with |
+| --- | --- | --- |
+| Understand the product model | [Core concepts](/concepts) | [Notification handlers](/concepts/notification-handlers) |
+| Set up a team and project | [Account setup](/account/setup) | [Members and roles](/account/members-and-roles) |
+| Prepare customers | [Customer pools](/customers/pools) | [Import customers](/customers/import) or [target lists](/customers/target-lists) |
+| Create notification content | [Configure a handler](/build/handlers) | [Templates](/build/templates) and [variables](/build/variables) |
+| Trigger from your backend | [Developer integration](/developers) | [Application triggering](/developers/trigger-notifications) |
+| Investigate a problem | [Troubleshooting](/troubleshooting) | [Notification events](/operations/events) |
 
-## Product areas
+## Connect providers and use the API
 
-### Notification handlers
+Use the existing [Integration directory](/integration) for provider discovery and setup. A handler's channel configuration selects the provider integration it uses.
 
-Notification handlers define what should be sent, through which channels, and under
-which configuration. A handler can contain channel templates, provider settings,
-recipients, preferences, and publishing state.
-
-### Customers and audiences
-
-Dokaai keeps customer data and audience grouping close to notification workflows.
-Customer pools, target audience lists, cohort segments, and notification groups help
-decide who should receive a message.
-
-### Channel providers
-
-Provider integrations connect Dokaai to the delivery services you use for email, SMS,
-push, WhatsApp, chat, and in-app notifications. This keeps delivery configuration
-reusable across handlers.
-
-### Preferences
-
-Customer preferences let you control whether a customer should receive a notification
-for a topic, group, channel, or other configured delivery rule.
-
-### API automation
-
-The API reference is generated from the OpenAPI schema. Use it when you need to trigger
-events, manage customers, update handlers, or integrate Dokaai with backend services.
-
-## Recommended path
-
-1. Read the [Quickstart](/quickstart).
-2. Review [Core Concepts](/concepts).
-3. Connect the required providers from [Integration](/integration).
-4. Test your first send flow from [Send
-   Notification](/api-reference/endpoints/send-notification).
-5. Use the [API Reference](/api-reference) for production automation.
+The [API Reference](/api-reference) owns request and response contracts. For application sends, start with [authentication](/api-reference/authentication) and the [Trigger Notification Handler operation](/api-reference/notification-handlers/trigger-notification-handler).

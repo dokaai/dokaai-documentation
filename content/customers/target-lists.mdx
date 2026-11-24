@@ -1,0 +1,51 @@
+---
+title: "Target lists and cohorts"
+description: "Choose and configure explicit list membership or query-based customer cohorts."
+---
+
+Use a target list for explicit customer membership and a cohort for a saved query definition. Both use an available [customer pool](/customers/pools); [audience queries](/customers/query-builder) provide the shared query-building task.
+
+## Target lists
+
+A target list holds explicit customer membership for a notification audience. Start with the [customer pool](/customers/pools) containing the records you want to include.
+
+### Create and populate a list
+
+1. Open **Customers → Target List** in the intended project.
+2. Create a list with a name and description, selecting the customer pool it uses.
+3. Select the customer records to associate with the list and submit the membership change.
+4. Reopen the list and inspect its members and current status before using it in a handler.
+
+Keep list identity and pool identity distinct. A pool can contain records that you have not added to this audience.
+
+### Add customers through a query
+
+The target-list query flow can select matching customers from its assigned pool and add them through a background job. [Build audience queries](/customers/query-builder) explains rules, sample data, Run query and Save and run query. Check the destination list and inspect job completion before using its updated membership.
+
+A saved cohort definition and an explicit target-list membership are different objects. Running a query to add customers does not establish automatic ongoing list synchronization.
+
+### Use the list in a notification
+
+In [Configure recipients](/build/recipients), choose the target-list source and select the intended list. Verify membership before testing a send; changing the template does not change list membership.
+
+For automation, see [Create Target Audience List](/api-reference/target-audience-lists/create-target-audience-list), [Associate Customers](/api-reference/target-audience-lists/associate-customer-to-target-audience-list) and [Get Target Audience List Customers](/api-reference/target-audience-lists/get-target-audience-list-customers).
+
+## Cohorts
+
+A customer cohort combines a pool-based cohort definition with an assigned query. Use it when you want to define audience criteria rather than explicitly associate each customer.
+
+### Define and check the cohort
+
+1. Open **Customers → Customer Cohort** in the intended project.
+2. Create the cohort with a name, description and customer pool.
+3. [Build and save its audience query](/customers/query-builder), using field types, operators and AND/OR groups appropriate to your pool.
+4. Inspect sample data for the query and check that the returned customers match your intended criteria.
+5. If query processing creates a background job, inspect it in **Job Status** before relying on its result.
+
+Sample data is a way to check the definition; it does not establish a guaranteed refresh interval or a complete audience count. Confirm the behavior needed by your use case before depending on a specific evaluation time.
+
+### Use the cohort
+
+Select the cohort source in [handler recipients](/build/recipients), then review the audience before a test or live send.
+
+The existing [Assign Cohort Query](/api-reference/cohort-segments/assign-cohort-query-to-cohort-segment) operation owns the query request contract. For problems with sample data or the chosen pool, use [Audience diagnostics](/troubleshooting/audiences) and [background-job inspection](/operations/jobs).

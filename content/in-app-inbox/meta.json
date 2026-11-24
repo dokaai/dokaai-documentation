@@ -1,0 +1,13 @@
+{
+  "title": "In-App Inbox",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "repository-and-urls",
+    "setup",
+    "code-examples",
+    "handler-setup",
+    "custom-ui",
+    "platform-examples"
+  ]
+}

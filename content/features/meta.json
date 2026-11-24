@@ -1,0 +1,22 @@
+{
+  "title": "Features",
+  "root": true,
+  "icon": "Layers",
+  "pages": [
+    "index",
+    "client-jobs",
+    "computed-formulas",
+    "customer-attributes",
+    "customer-pool",
+    "customer-preferences",
+    "events",
+    "notification-handler",
+    "notification-provider-integration",
+    "scheduler",
+    "send-policy",
+    "service-subscription",
+    "templates",
+    "trigger-notification",
+    "unsubscribe-flow"
+  ]
+}

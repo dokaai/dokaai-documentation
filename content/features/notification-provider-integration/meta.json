@@ -1,0 +1,13 @@
+{
+  "title": "Notification Provider Integration",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "create-and-update",
+    "credential-security",
+    "default-integrations",
+    "validation-and-testing",
+    "integration-directory",
+    "dokaai-in-app"
+  ]
+}

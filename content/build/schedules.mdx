@@ -1,0 +1,32 @@
+---
+title: "Schedule notifications"
+description: "Choose one-time, multiple-date, or recurring scheduling and review the saved timezone."
+---
+
+A schedule configures when a handler is intended to be triggered. It is separate from the template's content, the recipient source and any quiet-hours policy that applies to processing.
+
+## Choose a schedule type
+
+| Type | Use it for |
+| --- | --- |
+| One time | A single intended date/time |
+| Multiple dates | Several explicitly selected dates/times |
+| Recurring | A repeating pattern configured with the available daily, weekly or monthly controls |
+
+For example, an appointment reminder can use a one-time schedule, while a recurring account update can use a repeating pattern.
+
+## Configure and review
+
+1. Prepare the handler's [channels/templates](/build/templates) and [recipients](/build/recipients). Exercise a controlled [test send](/build/test-and-send) first to check the content and data.
+2. Open the handler's schedule configuration and select the intended timezone.
+3. Choose a schedule type and enter its dates, times or recurrence values. Review any exclusion-date controls offered for that type.
+4. Save and reopen the schedule to check that the intended type, timezone and values were retained.
+5. At the intended run time, inspect the resulting [handler event](/operations/events).
+
+The schedule timezone and DND-policy timezone are separate settings. Review both when investigating a delayed or missing notification.
+
+## Change a schedule
+
+Switching schedule type can clear the existing type's configuration; the dashboard asks for confirmation when values are present. Review the replacement schedule before saving.
+
+Confirm scheduling support and operational timing for your deployment before relying on a live recurring workload. These configuration controls do not establish exact firing, missed-run recovery, daylight-saving or cancellation guarantees. Use the saved schedule and event evidence to check an individual run.

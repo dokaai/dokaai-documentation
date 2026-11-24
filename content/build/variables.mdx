@@ -1,0 +1,63 @@
+---
+title: "Variables and personalization"
+description: "Understand template data, shared and recipient values, and computed attributes in one guide."
+---
+
+## Templates and data
+
+A channel template contains the content used by a handler for a particular channel. A template has its own publication state and variable definitions. Review the channel and template together before triggering a handler.
+
+Variables let a channel template use values from attribute catalogs or send-time data. Configure the [template](/build/templates) first, then review the available variable categories in its editor.
+
+| Category | How to use it |
+| --- | --- |
+| App attributes | Select an available application attribute |
+| Custom attributes | Select a configured customer field from the attribute catalog |
+| Template variables | Define values supplied for the template when triggering |
+| Dynamic/personalization variables | Define values that may differ for each recipient |
+| Computed attributes | Review formula-defined values available in the editor |
+
+## Prepare values
+
+1. Insert the intended variable from the editor's available sources rather than guessing a field name.
+2. Check the definition's name and data type, including fields inside objects and arrays.
+3. When testing, supply shared template values and per-recipient values in their respective parts of the send form.
+4. Resolve validation errors and review the resulting content before a live send.
+
+The same field name can have different definitions across channels. Check the channel-specific definition when values appear ambiguous. An omitted or empty value is not evidence that the message can render correctly.
+
+[Custom attributes](/customers/pools#custom-attributes) explains customer field setup. Continue with [test/send](/build/test-and-send), or use [Template and variable diagnostics](/troubleshooting/templates) when a reference or value fails validation.
+
+## Match data to the recipient source
+
+For explicit payload recipients, prepare each recipient's contact and personalization values. For a target list or cohort, review persisted customer attributes and shared template data. Events can report a dynamic-variable warning when per-recipient dynamic inputs are unavailable for a criteria source; inspect the affected channel/template/field names rather than assuming they were applied.
+
+Use the computed-attribute section below for formula-derived values and [Inspect notification events](/operations/events) for mapping warnings from a run.
+
+## Computed attributes
+
+A computed attribute is a named formula-derived value. Use one when a template needs a transformation of existing values rather than another manually supplied field. For example, a greeting can use an uppercase version of a name.
+
+### Create and use a computed value
+
+1. Open the template's computed-attribute controls.
+2. Give the attribute a recognizable, unique name.
+3. Build the formula using the function catalog and available source fields. Sources can include app, custom, dynamic and template attributes, as well as other available computed values.
+4. Check the editor's validation and preview with representative input values.
+5. Save the definition, insert its variable into the template, and test the notification.
+
+The editor's text functions include an expression such as:
+
+```text
+UPPER({{name}})
+```
+
+With a name value of `Ada`, the local formula result is `ADA`. Select the actual field from your template's catalog; the example assumes a field named `name` exists.
+
+### Check dependencies and output
+
+Review the type and availability of every referenced source. A formula that uses recipient-specific data needs that data for the chosen recipient source. Changing or removing a source field can affect the computed value and templates that use it.
+
+Use the editor's catalog for available functions and syntax. A local preview validates that example in the editor; confirm the result in a controlled [test send](/build/test-and-send) before relying on the delivery runtime. This guide does not promise parity for every function or missing-value case.
+
+Inspect [Events](/operations/events) and [Template diagnostics](/troubleshooting/templates) if a computed value does not produce the expected result.

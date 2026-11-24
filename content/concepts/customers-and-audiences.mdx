@@ -1,0 +1,21 @@
+---
+title: "Customers and Audiences"
+description: "Choose between customer records, explicit lists, query-based cohorts, and payload recipients."
+---
+
+Customer data and recipient selection serve different purposes. A pool holds customer records. A target list or cohort identifies an audience drawn from a pool. A handler can also accept recipients directly in a trigger payload.
+
+| Object or mode | Use it for | Guide |
+| --- | --- | --- |
+| Customer pool | Customer records and their attributes | [Manage pools](/customers/pools) |
+| Target list | Explicitly associated customer membership | [Target lists](/customers/target-lists) |
+| Customer cohort | A saved cohort definition with an assigned query and sample inspection | [Customer cohorts](/customers/target-lists#cohorts) |
+| Payload-based recipients | Contact and personalization values supplied for a send | [Configure recipients](/build/recipients) |
+
+## Choose a recipient source
+
+Use a target list when you need explicit membership. Use a cohort when you need to define a query and inspect matching sample data. Use payload-based recipients when your calling application supplies the contacts for that trigger.
+
+Handler creation requires a customer-pool selection. Preparing list or cohort membership is optional when you choose payload-based recipients; do not confuse that optional audience preparation with the required pool association.
+
+Preference groups and topics describe communication choices. They do not act as target lists or select the recipient audience. See [Preference groups and topics](/preferences/groups-and-topics).
