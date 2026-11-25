@@ -1,0 +1,2 @@
+# Owner review is required because deployed application code may access runtime secrets.
+* @ajoshi31
