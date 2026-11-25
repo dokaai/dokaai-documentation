@@ -2,13 +2,13 @@
   "pages": [
     "index",
     "onboarding",
-    "concepts",
-    "account",
+    "core-concepts",
+    "account-and-teams",
     "authentication",
     "channels-and-templates",
-    "customers",
-    "developers",
-    "build",
+    "customers-and-audiences",
+    "developer-integration",
+    "send-message",
     "in-app-inbox"
   ]
 }

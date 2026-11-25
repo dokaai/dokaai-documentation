@@ -2,6 +2,10 @@
   "title": "Templates",
   "defaultOpen": false,
   "pages": [
-    "index"
+    "index",
+    "create-and-edit-templates",
+    "variables-and-data-mapping",
+    "template-preview-and-validation",
+    "publishing-and-updates"
   ]
 }

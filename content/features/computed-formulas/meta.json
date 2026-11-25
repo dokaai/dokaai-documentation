@@ -2,6 +2,9 @@
   "title": "Computed Formulas",
   "defaultOpen": false,
   "pages": [
-    "index"
+    "index",
+    "create-and-edit-formulas",
+    "formula-preview-and-validation",
+    "use-formulas-in-templates"
   ]
 }

@@ -10,13 +10,13 @@ const tree: PageTree.Root = {
     { type: 'page', name: 'Home', url: '/' },
     { type: 'page', name: 'Quickstart', url: '/quickstart' },
     {
-      type: 'folder', name: 'Build notifications',
-      index: { type: 'page', name: 'Build', url: '/build' },
+      type: 'folder', name: 'Send Message',
+      index: { type: 'page', name: 'Send Message', url: '/send-message' },
       children: [
-        { type: 'page', name: 'Variables', url: '/build/variables' },
+        { type: 'page', name: 'Variables', url: '/send-message/variables' },
         {
           type: 'folder', name: 'Future topics',
-          children: [{ type: 'page', name: 'New topic', url: '/build/future/topic' }],
+          children: [{ type: 'page', name: 'New topic', url: '/send-message/future/topic' }],
         },
       ],
     },
@@ -42,7 +42,7 @@ const tree: PageTree.Root = {
 };
 
 test('Documentation stays active for every depth in its page tree', () => {
-  for (const pathname of ['/', '/quickstart', '/build', '/build/variables', '/build/variables/', '/build/future/topic']) {
+  for (const pathname of ['/', '/quickstart', '/send-message', '/send-message/variables', '/send-message/variables/', '/send-message/future/topic']) {
     assert.deepEqual(activeTabs(pathname), ['Documentation'], pathname);
   }
 });
@@ -75,7 +75,7 @@ test('Features owns its root and nested pages without selecting Documentation', 
 
 test('Documentation stays active on retained pages hidden from its sidebar', () => {
   const pages = [
-    { url: '/account/api-credentials' },
+    { url: '/account-and-teams/api-credentials' },
     { url: '/troubleshooting/delivery' },
     { url: '/features/in-app-inbox/setup' },
     { url: '/integration/providers/example' },

@@ -3,38 +3,4 @@ title: "Quickstart"
 description: "Configure a handler, send a test notification, and inspect the result."
 ---
 
-This walkthrough uses the dashboard to send a first test notification. Use a channel and recipient you control. For this first run, prepare one channel and a simple template before adding personalization or larger audiences.
-
-## Before you start
-
-You need dashboard access to an organization and project, permission to configure notifications, the notification service enabled in the project, an associated product space, a customer pool available to select, and a provider integration for your chosen channel. Follow [account and project setup](/account/setup), including its services and product-space sections and the provider's existing [integration guide](/integration) if these are not ready.
-
-For a concrete first run, use an Order confirmation handler with an email template and a test mailbox you control. The following steps apply to the chosen channel; provider-specific requirements remain in Integration.
-
-## 1. Create a notification handler
-
-Open the project's **Notification Handler** area and create a handler for your notification. Give it a recognizable name, review its unique handler key, select its customer pool, and choose its notification type, priority and message frequency. For this direct-trigger walkthrough, use the Real time path. The key is fixed after creation. See [Configure notification handlers](/build/handlers).
-
-## 2. Configure a channel and recipient source
-
-[Enable the channel and choose its provider integration](/build/channels). Then [configure recipients](/build/recipients). A payload-based recipient lets you supply a test contact without first preparing target-list or cohort membership. The handler still has the customer-pool association selected in its basic details.
-
-## 3. Create and publish a template
-
-[Create a template](/build/templates) for the selected channel. Keep the first message simple. If it uses variables, review [where each value comes from](/build/variables) and prepare test values. Publish the template and review the handler's publishing state.
-
-## 4. Review preferences and policy
-
-Review the handler's [preference mode and association](/preferences/groups-and-topics#handler-preferences). Check the relevant notification-kind/channel [send policy](/preferences/send-policy), including DND settings. Organization/per-user caps are currently preview-only and should not be relied on as active limits.
-
-## 5. Submit a test send
-
-Open the handler's send interface, select test mode, review the selected channel, and enter the recipient/contact and variable values requested by the form. Follow [Test and send notifications](/build/test-and-send) to resolve validation errors before submitting.
-
-## 6. Inspect the handler event
-
-Open the handler's events and inspect the event corresponding to your test. Compare the reported channel result with the notification received by your test recipient. A successful submission alone does not confirm receipt. [Inspect notification events](/operations/events) explains the inspection paths; use [delivery investigation](/troubleshooting/delivery) if the result is unexpected.
-
-## Next step
-
-Once the dashboard configuration is ready, a developer can [trigger the handler from an application](/developers/trigger-notifications).
+Hello world.
