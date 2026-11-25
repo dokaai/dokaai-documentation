@@ -22,7 +22,7 @@ on:
       - "proxy.ts"
       - "source.config.ts"
       - "tsconfig.json"
-      - ".github/workflows/gcp_web_app_wif.yml"
+      - ".github/workflows/gcp_docs_wif.yml"
   workflow_dispatch:
     inputs:
       source_sha:
@@ -67,6 +67,22 @@ jobs:
             exit 1
           fi
 
+      - name: Validate runtime configuration
+        shell: bash
+        env:
+          DOCS_ENV_SECRET: ${{ secrets.DOCS_ENV_SECRET }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$DOCS_ENV_SECRET" ]]; then
+            echo "DOCS_ENV_SECRET is not configured for the selected environment." >&2
+            exit 1
+          fi
+          if [[ -z "$NEXT_PUBLIC_SITE_URL" ]]; then
+            echo "NEXT_PUBLIC_SITE_URL is not configured for the selected environment." >&2
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -96,6 +112,8 @@ jobs:
           tags: ${{ steps.image.outputs.image_ref }}
           load: true
           push: false
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -134,7 +152,7 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ steps.image-digest.outputs.image_digest }}
-          env_vars: ${{ secrets.WEB_APP_ENV_SECRET }}
+          env_vars: ${{ secrets.DOCS_ENV_SECRET }}
           env_vars_update_strategy: overwrite
 
       - name: Show Output
