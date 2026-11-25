@@ -10,6 +10,8 @@ pnpm-debug.log*
 .env
 .env.local
 .env.development
+.env.production
 .env.test
+gha-creds-*.json
 README.md
 tsconfig.tsbuildinfo
