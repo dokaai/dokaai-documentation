@@ -60,7 +60,7 @@ Most of these changes are already proposed in PR #53, but they are not active un
 - [ ] Review the existing Dependabot alerts; GitHub reported 102 alerts on the default branch.
 - [ ] Restrict allowed third-party Actions where supported.
 - [ ] Prefer enforcing full commit-SHA pinning for Actions at the organization level.
-- [ ] Remove unused Azure variables if documentation deployment now uses only GCP.
+- [x] Remove unused Azure variables from `dev` and `prod` environments (completed by owner).
 - [ ] Ensure dev and production use separate runtime secrets and service accounts.
 
 ## Google Cloud security still required
