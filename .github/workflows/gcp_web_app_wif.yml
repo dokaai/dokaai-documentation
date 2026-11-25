@@ -22,7 +22,6 @@ on:
       - "source.config.ts"
       - "tsconfig.json"
       - ".github/workflows/gcp_web_app_wif.yml"
-  workflow_dispatch:
 
 concurrency:
   group: deploy-docs-wif-${{ github.ref }}
@@ -85,14 +84,6 @@ jobs:
             echo "Image does not exist for ${{ github.sha }}. Build and push required."
           fi
 
-      - name: Write build env file
-        if: steps.check-image.outputs.exists != 'true'
-        shell: bash
-        env:
-          WEB_APP_ENV_SECRET: ${{ secrets.WEB_APP_ENV_SECRET }}
-        run: |
-          set -euo pipefail
-          printf '%s' "$WEB_APP_ENV_SECRET" > .env.production
 
       - name: Build and Push Container
         if: steps.check-image.outputs.exists != 'true'
