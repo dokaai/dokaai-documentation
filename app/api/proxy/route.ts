@@ -6,6 +6,35 @@ const ALLOWED_ORIGINS = new Set([
 
 const METHODS_WITH_BODY = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
+function validateProxyTarget(rawUrl: string): { ok: true; url: URL } | { ok: false; message: string } {
+  let parsed: URL;
+
+  try {
+    parsed = new URL(rawUrl);
+  } catch {
+    return { ok: false, message: 'Invalid proxy target url.' };
+  }
+
+  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+    return { ok: false, message: `Proxy target protocol is not allowed: ${parsed.protocol}` };
+  }
+
+  if (parsed.username || parsed.password) {
+    return { ok: false, message: 'Proxy target url must not include credentials.' };
+  }
+
+  const normalized = new URL(parsed.toString());
+
+  if (!ALLOWED_ORIGINS.has(normalized.origin)) {
+    return {
+      ok: false,
+      message: `Proxy target origin is not allowed: ${normalized.origin}`,
+    };
+  }
+
+  return { ok: true, url: normalized };
+}
+
 async function handle(request: Request) {
   const method = request.method.toUpperCase();
   const searchParams = new URL(request.url).searchParams;
@@ -15,22 +44,12 @@ async function handle(request: Request) {
     return Response.json({ message: 'Missing proxy target url.' }, { status: 400 });
   }
 
-  let targetUrl: URL;
-
-  try {
-    targetUrl = new URL(rawUrl);
-  } catch {
-    return Response.json({ message: 'Invalid proxy target url.' }, { status: 400 });
+  const targetValidation = validateProxyTarget(rawUrl);
+  if (!targetValidation.ok) {
+    return Response.json({ message: targetValidation.message }, { status: 400 });
   }
 
-  if (!ALLOWED_ORIGINS.has(targetUrl.origin)) {
-    return Response.json(
-      {
-        message: `Proxy target origin is not allowed: ${targetUrl.origin}`,
-      },
-      { status: 400 },
-    );
-  }
+  const targetUrl = targetValidation.url;
 
   const headers = new Headers(request.headers);
   headers.delete('origin');
