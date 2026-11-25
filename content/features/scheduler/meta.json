@@ -2,6 +2,9 @@
   "title": "Scheduler",
   "defaultOpen": false,
   "pages": [
-    "index"
+    "index",
+    "one-time-and-multiple-date-schedules",
+    "recurring-schedules",
+    "timezones-and-exclusions"
   ]
 }

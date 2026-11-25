@@ -2,6 +2,9 @@
   "title": "Trigger Notification",
   "defaultOpen": false,
   "pages": [
-    "index"
+    "index",
+    "test-and-live-sends",
+    "payload-and-overrides",
+    "api-and-curl-requests"
   ]
 }
