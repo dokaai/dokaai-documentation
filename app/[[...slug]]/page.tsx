@@ -96,7 +96,10 @@ async function ProviderPage({ providerId }: { providerId: string }) {
   const detail = await getProviderDetail(provider.providerId);
   return (
     <ProviderDetail
-      provider={{ ...provider, credentialSchema: detail?.credentialSchema }}
+      provider={{
+        ...provider,
+        credentialSchema: detail?.credentialSchema ?? provider.credentialSchema,
+      }}
       detailUnavailable={!detail}
     />
   );

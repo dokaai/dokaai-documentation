@@ -111,8 +111,8 @@ export function ProviderDetail({
         )}
         {detailUnavailable && (
           <p>
-            Provider configuration fields are temporarily unavailable. Please
-            try again later.
+            Unable to refresh provider configuration details. Any available
+            configuration fields are shown below. Please try again later.
           </p>
         )}
         {!detailUnavailable && !provider.credentialSchema && (
