@@ -82,6 +82,7 @@ async function handle(request: Request) {
       headers,
       body,
       cache: 'no-cache',
+      redirect: 'error',
     });
 
     const responseHeaders = new Headers(response.headers);
