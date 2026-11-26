@@ -1,0 +1,159 @@
+name: Deploy Documentation WIF
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - "app/**"
+      - "components/**"
+      - "content/**"
+      - "lib/**"
+      - "public/**"
+      - "scripts/**"
+      - ".dockerignore"
+      - "Dockerfile"
+      - "eslint.config.mjs"
+      - "next.config.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "postcss.config.mjs"
+      - "proxy.ts"
+      - "source.config.ts"
+      - "tsconfig.json"
+      - ".github/workflows/gcp_docs_wif.yml"
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Full 40-character commit SHA from the feature branch or PR
+        required: true
+        type: string
+
+concurrency:
+  group: deploy-docs-wif-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' &&
+      github.actor == 'ajoshi31' &&
+      github.ref == 'refs/heads/dev')
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GAR_NAME: frontend-services
+      GAR_LOCATION: ${{ vars.GCP_REGION }}
+      GAR_SERVICE: docs
+      SERVICE: docs
+      REGION: ${{ vars.GCP_REGION }}
+      SOURCE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
+    steps:
+      - name: Validate deployment source
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$SOURCE_SHA" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "source_sha must be a full 40-character commit SHA." >&2
+            exit 1
+          fi
+
+      - name: Validate runtime configuration
+        shell: bash
+        env:
+          DOCS_ENV_SECRET: ${{ secrets.DOCS_ENV_SECRET }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$DOCS_ENV_SECRET" ]]; then
+            echo "DOCS_ENV_SECRET is not configured for the selected environment." >&2
+            exit 1
+          fi
+          if [[ -z "$NEXT_PUBLIC_SITE_URL" ]]; then
+            echo "NEXT_PUBLIC_SITE_URL is not configured for the selected environment." >&2
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Resolve image coordinates
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_id="$(printf '%s' '${{ env.PROJECT_ID }}' | tr -d '\r\n')"
+          gar_location="$(printf '%s' '${{ env.GAR_LOCATION }}' | tr -d '\r\n')"
+          gar_name="$(printf '%s' '${{ env.GAR_NAME }}' | tr -d '\r\n')"
+          gar_service="$(printf '%s' '${{ env.GAR_SERVICE }}' | tr -d '\r\n')"
+          image_ref="${gar_location}-docker.pkg.dev/${project_id}/${gar_name}/${gar_service}:${SOURCE_SHA}"
+          echo "image_ref=$image_ref" >> "$GITHUB_OUTPUT"
+
+      - name: Build container without cloud credentials or secrets
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: ${{ steps.image.outputs.image_ref }}
+          load: true
+          push: false
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: Docker Auth
+        run: gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
+
+      - name: Push container
+        run: docker push "${{ steps.image.outputs.image_ref }}"
+
+      - name: Resolve image digest
+        id: image-digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_ref="$(printf '%s' '${{ steps.image.outputs.image_ref }}' | tr -d '\r\n')"
+          image_digest="$(gcloud artifacts docker images describe "$image_ref" --format='value(image_summary.fully_qualified_digest)')"
+
+          if [[ -z "$image_digest" ]]; then
+            echo "Unable to resolve image digest for $image_ref" >&2
+            exit 1
+          fi
+
+          echo "image_digest=$image_digest" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@251330ba9a8a34bfbc1622895f42e1d53fd14522 # v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ steps.image-digest.outputs.image_digest }}
+          env_vars: ${{ secrets.DOCS_ENV_SECRET }}
+          env_vars_update_strategy: overwrite
+
+      - name: Show Output
+        run: echo "${{ steps.deploy.outputs.url }}"
