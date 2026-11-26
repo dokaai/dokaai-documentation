@@ -98,7 +98,7 @@ export function normalizeCatalog(value: unknown): Provider[] {
   ) {
     throw new Error('Invalid provider catalog response');
   }
-  const providers = value.data.map((item): Provider => {
+  const providers = value.data.flatMap((item): Provider[] => {
     if (
       !record(item) ||
       !nonempty(item.id) ||
@@ -107,14 +107,14 @@ export function normalizeCatalog(value: unknown): Provider[] {
       !nonempty(item.channel) ||
       !nonempty(item.availabilityStatus)
     ) {
-      throw new Error('Invalid provider in catalog response');
+      return [];
     }
     const logo = record(item.logoFileName)
       ? (optionalString(item.logoFileName.dark) ??
         optionalString(item.logoFileName.light))
       : optionalString(item.logoFileName);
     const credentialSchema = normalizeCredentialSchema(item.credentialSchema);
-    return {
+    return [{
       id: item.id,
       providerId: item.providerId,
       name: item.name,
@@ -126,7 +126,7 @@ export function normalizeCatalog(value: unknown): Provider[] {
         ? item.supportedPushDevices.filter(nonempty)
         : undefined,
       credentialSchema,
-    };
+    }];
   });
   return uniqueProviders(providers);
 }
