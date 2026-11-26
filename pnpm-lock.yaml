@@ -1517,12 +1517,17 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 =======
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ==}
 >>>>>>> 5a6f9991ed6bf0fa5caa14a0971d5a88214a9dc1
+=======
+  '@ungap/structured-clone@1.4.0':
+    resolution: {integrity: sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ==}
+>>>>>>> 13872c2f8c26fb8fe9d342587ae211c16eb6dcee
 
   '@unrs/resolver-binding-android-arm-eabi@1.13.0':
     resolution: {integrity: sha512-60E5mvmIiW+i1E/HYeSX4iE4A8s9NJSGYPu7UM0DJght1c2tTkWwuyDyAwzsEXhKM/XbbndfnTiXdfrf27d2hw==}
@@ -1902,12 +1907,17 @@ packages:
     engines: {node: '>=0.10.0'}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   dokaai-openapi-spec@0.1.19:
     resolution: {integrity: sha512-E4B2I2JKUu3Qh8l1cPtBAGzDWKbrxcdWgXzcE5wHDjHdid9mDvpVujzKQccgarrM4HunGdhihpWW7svmS030Dw==}
 =======
   dokaai-openapi-spec@0.1.21:
     resolution: {integrity: sha512-kFj8WEzPL8ffxyR1A76iTYB0MD/VQ4Vzy2lHKjC2zmuyNNYB5ywh7gGSNF357GnT6E/Is6e2Q+DfmyP5mjHNxA==}
 >>>>>>> 5a6f9991ed6bf0fa5caa14a0971d5a88214a9dc1
+=======
+  dokaai-openapi-spec@0.1.21:
+    resolution: {integrity: sha512-kFj8WEzPL8ffxyR1A76iTYB0MD/VQ4Vzy2lHKjC2zmuyNNYB5ywh7gGSNF357GnT6E/Is6e2Q+DfmyP5mjHNxA==}
+>>>>>>> 13872c2f8c26fb8fe9d342587ae211c16eb6dcee
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -5359,10 +5369,14 @@ snapshots:
       esutils: 2.0.3
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   dokaai-openapi-spec@0.1.19: {}
 =======
   dokaai-openapi-spec@0.1.21: {}
 >>>>>>> 5a6f9991ed6bf0fa5caa14a0971d5a88214a9dc1
+=======
+  dokaai-openapi-spec@0.1.21: {}
+>>>>>>> 13872c2f8c26fb8fe9d342587ae211c16eb6dcee
 
   dunder-proto@1.0.1:
     dependencies:
