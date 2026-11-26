@@ -172,7 +172,7 @@ export function providerLogoUrl(
   providerId: string,
   logoFileName?: string,
 ): string {
-  const origin = process.env.DOKAAI_WEB_URL || 'https://dokaai.com';
+  const origin = process.env.MARKETING_SITE_URL || 'https://dokaai.com';
   const fallback = `/channel-provider/${encodeURIComponent(providerLogoOverrides[providerId] ?? `${providerId}.svg`)}`;
   if (logoFileName) {
     try {
@@ -260,10 +260,10 @@ async function authenticatedBackendGet(
   stage: string,
 ): Promise<unknown> {
   const authUrl = endpoint(
-    requiredEnvironment('AUTH_SERVICE_URL'),
+    requiredEnvironment('AUTH_API_URL'),
     '/auth/internal-service/token',
   );
-  const catalogUrl = endpoint(requiredEnvironment('NUDGE_SERVICE_URL'), path);
+  const catalogUrl = endpoint(requiredEnvironment('NUDGE_API_URL'), path);
   const payload = await requestJson('Service authentication', authUrl, {
     method: 'POST',
     headers: {

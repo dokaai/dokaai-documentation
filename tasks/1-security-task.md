@@ -13,11 +13,12 @@ Security checklist for this public repository. Local file changes require review
   - Manual dispatch must never select production.
 - [x] Keep sensitive server configuration and `INTERNAL_ADMIN_SECRET_KEY` out of the Docker build. Only the public site URL may enter as a build argument.
 - [x] Keep Google authentication after the Docker build.
-- [x] Configure `NEXT_PUBLIC_SITE_URL` as a GitHub environment secret for both `dev` and `prod`, as requested. Its value is still public in the generated browser bundle.
-- [x] Pass `NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}` explicitly as a Docker build argument.
-- [x] Declare `ARG NEXT_PUBLIC_SITE_URL` and builder-stage `ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL` in the Dockerfile before `pnpm build`.
+- [ ] Configure the renamed `NEXT_PUBLIC_DOCUMENTATION_URL` GitHub environment secret for both `dev` and `prod`. The local workflow is updated; remote settings have not been changed. Its value remains public in generated metadata.
+- [x] Pass `NEXT_PUBLIC_DOCUMENTATION_URL=${{ secrets.NEXT_PUBLIC_DOCUMENTATION_URL }}` explicitly as a Docker build argument.
+- [x] Declare `ARG NEXT_PUBLIC_DOCUMENTATION_URL` and builder-stage `ENV NEXT_PUBLIC_DOCUMENTATION_URL=$NEXT_PUBLIC_DOCUMENTATION_URL` in the Dockerfile before `pnpm build`.
 - [x] Remove committed `.env.production` and `.env.development`; retain `.env.example` without secrets and ignore environment-specific files.
 - [x] Keep server-only configuration in `DOCS_ENV_SECRET` at Cloud Run runtime.
+- [ ] Align the keys inside `DOCS_ENV_SECRET` with `AUTH_API_URL`, `NUDGE_API_URL`, and `MARKETING_SITE_URL`; retain `INTERNAL_ADMIN_SECRET_KEY` and `DOKAAI_CALLER_SERVICE_ID`. Remote secret values have not been changed.
 - [x] Keep GitHub Actions pinned to immutable commit SHAs.
 - [x] Keep `gha-creds-*.json` excluded from Git and Docker.
 - [x] Keep pull-request CI completely secret-free.

@@ -71,15 +71,15 @@ jobs:
         shell: bash
         env:
           DOCS_ENV_SECRET: ${{ secrets.DOCS_ENV_SECRET }}
-          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_DOCUMENTATION_URL: ${{ secrets.NEXT_PUBLIC_DOCUMENTATION_URL }}
         run: |
           set -euo pipefail
           if [[ -z "$DOCS_ENV_SECRET" ]]; then
             echo "DOCS_ENV_SECRET is not configured for the selected environment." >&2
             exit 1
           fi
-          if [[ -z "$NEXT_PUBLIC_SITE_URL" ]]; then
-            echo "NEXT_PUBLIC_SITE_URL is not configured for the selected environment." >&2
+          if [[ -z "$NEXT_PUBLIC_DOCUMENTATION_URL" ]]; then
+            echo "NEXT_PUBLIC_DOCUMENTATION_URL is not configured for the selected environment." >&2
             exit 1
           fi
 
@@ -113,7 +113,7 @@ jobs:
           load: true
           push: false
           build-args: |
-            NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_DOCUMENTATION_URL=${{ secrets.NEXT_PUBLIC_DOCUMENTATION_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
