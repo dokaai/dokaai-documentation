@@ -11,6 +11,32 @@ import { ProviderLogo } from './provider-logo';
 import { providerGuideSource } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
 
+/** Published setup instructions stay available without live catalog data. */
+export function PublishedProviderGuide({
+  guide,
+}: {
+  guide: (typeof providerGuideSource)['$inferPage'];
+}) {
+  const Guide = guide.data.body;
+  return (
+    <DocsPage
+      toc={guide.data.toc}
+      tableOfContent={{ enabled: true }}
+      tableOfContentPopover={{ enabled: true }}
+    >
+      <DocsTitle>{guide.data.title}</DocsTitle>
+      <DocsDescription>{guide.data.description}</DocsDescription>
+      <DocsBody>
+        <p>
+          Live provider information and configuration fields are temporarily
+          unavailable. You can still follow the setup guide below.
+        </p>
+        <Guide components={getMDXComponents()} />
+      </DocsBody>
+    </DocsPage>
+  );
+}
+
 export function ProviderDetail({
   provider,
   detailUnavailable = false,

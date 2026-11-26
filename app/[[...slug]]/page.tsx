@@ -1,4 +1,4 @@
-import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
+import { getPageImage, getPageMarkdownUrl, providerGuideSource, source } from '@/lib/source';
 import {
   DocsBody,
   DocsDescription,
@@ -13,7 +13,7 @@ import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
 import { getProviderCatalog, getProviderDetail } from '@/lib/integrations/provider-catalog';
-import { ProviderDetail } from '@/components/integrations/provider-detail';
+import { ProviderDetail, PublishedProviderGuide } from '@/components/integrations/provider-detail';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import { IntegrationPageSkeleton } from '@/components/integrations/integration-loading';
@@ -76,7 +76,10 @@ export default async function Page(props: { params: Promise<PageParams> }) {
 }
 
 async function ProviderPage({ providerId }: { providerId: string }) {
+  const guide = providerGuideSource.getPage([providerId]);
   const providers = await getProviderCatalog();
+  const provider = providers?.find((item) => item.providerId === providerId);
+  if (!provider && guide) return <PublishedProviderGuide guide={guide} />;
   if (!providers)
     return (
       <DocsPage>
@@ -84,7 +87,6 @@ async function ProviderPage({ providerId }: { providerId: string }) {
         <DocsBody>Please try again later.</DocsBody>
       </DocsPage>
     );
-  const provider = providers.find((item) => item.providerId === providerId);
   if (!provider) notFound();
   const detail = await getProviderDetail(provider.providerId);
   return (
