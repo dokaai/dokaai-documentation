@@ -35,8 +35,11 @@ export default async function Page(props: { params: Promise<PageParams> }) {
     slug[0] === 'integration' &&
     slug[1] === 'providers'
   ) {
+    const guide = providerGuideSource.getPage([slug[2]]);
     return (
-      <Suspense fallback={<IntegrationPageSkeleton detail />}>
+      <Suspense fallback={guide
+        ? <PublishedProviderGuide guide={guide} loading />
+        : <IntegrationPageSkeleton detail />}>
         <ProviderPage providerId={slug[2]} />
       </Suspense>
     );

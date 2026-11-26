@@ -14,8 +14,10 @@ import { getMDXComponents } from '@/components/mdx';
 /** Published setup instructions stay available without live catalog data. */
 export function PublishedProviderGuide({
   guide,
+  loading = false,
 }: {
   guide: (typeof providerGuideSource)['$inferPage'];
+  loading?: boolean;
 }) {
   const Guide = guide.data.body;
   return (
@@ -27,9 +29,10 @@ export function PublishedProviderGuide({
       <DocsTitle>{guide.data.title}</DocsTitle>
       <DocsDescription>{guide.data.description}</DocsDescription>
       <DocsBody>
-        <p>
-          Live provider information and configuration fields are temporarily
-          unavailable. You can still follow the setup guide below.
+        <p role="status">
+          {loading
+            ? 'Loading live provider information and configuration fields. You can read the setup guide below.'
+            : 'Live provider information and configuration fields are temporarily unavailable. You can still follow the setup guide below.'}
         </p>
         <Guide components={getMDXComponents()} />
       </DocsBody>
