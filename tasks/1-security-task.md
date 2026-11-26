@@ -13,9 +13,9 @@ Security checklist for this public repository. Local file changes require review
   - Manual dispatch must never select production.
 - [x] Keep sensitive server configuration and `INTERNAL_ADMIN_SECRET_KEY` out of the Docker build. Only the public site URL may enter as a build argument.
 - [x] Keep Google authentication after the Docker build.
-- [x] Configure `NEXT_PUBLIC_SITE_URL` as a GitHub environment secret for both `dev` and `prod`, as requested. Its value is still public in the generated browser bundle.
-- [x] Pass `NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}` explicitly as a Docker build argument.
-- [x] Declare `ARG NEXT_PUBLIC_SITE_URL` and builder-stage `ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL` in the Dockerfile before `pnpm build`.
+- [x] Configure `NEXT_PUBLIC_DOCUMENTATION_URL` as a GitHub environment secret for both `dev` and `prod`, as requested. Its value is still public in the generated browser bundle.
+- [x] Pass `NEXT_PUBLIC_DOCUMENTATION_URL=${{ secrets.NEXT_PUBLIC_DOCUMENTATION_URL }}` explicitly as a Docker build argument.
+- [x] Declare `ARG NEXT_PUBLIC_DOCUMENTATION_URL` and builder-stage `ENV NEXT_PUBLIC_DOCUMENTATION_URL=$NEXT_PUBLIC_DOCUMENTATION_URL` in the Dockerfile before `pnpm build`.
 - [x] Remove committed `.env.production` and `.env.development`; retain `.env.example` without secrets and ignore environment-specific files.
 - [x] Keep server-only configuration in `DOCS_ENV_SECRET` at Cloud Run runtime.
 - [x] Keep GitHub Actions pinned to immutable commit SHAs.
