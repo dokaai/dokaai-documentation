@@ -17,6 +17,8 @@ import { ProviderDetail, PublishedProviderGuide } from '@/components/integration
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import { IntegrationPageSkeleton } from '@/components/integrations/integration-loading';
+import { getProviderMetadata } from '@/lib/integrations/provider-metadata';
+import { withBasePath } from '@/lib/shared';
 
 type PageParams = {
   slug?: string[];
@@ -113,9 +115,26 @@ export async function generateMetadata(props: {
     slug[0] === 'integration' &&
     slug[1] === 'providers'
   ) {
-    const providers = await getProviderCatalog();
-    const provider = providers?.find((item) => item.providerId === slug[2]);
-    return { title: provider?.name ?? 'Provider integration' };
+    const metadata = await getProviderMetadata(slug[2]);
+    if (!metadata) return { title: 'Provider integration | Dokaai' };
+    const { title, description, url, image } = metadata;
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: withBasePath(url),
+        type: 'website',
+        images: [{ url: image, width: 1200, height: 630, alt: title }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [image],
+      },
+    };
   }
   if (!page) notFound();
 
