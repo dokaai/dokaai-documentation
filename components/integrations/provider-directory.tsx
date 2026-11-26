@@ -6,6 +6,7 @@ import { Search } from 'lucide-react';
 import type { Provider } from '@/lib/integrations/provider-catalog';
 import { channelLabel, providerUrl } from '@/lib/integrations/provider-content';
 import { ProviderLogo } from './provider-logo';
+import { ProviderStatusBadge } from './provider-status-badge';
 
 type Entry = Provider & { logoUrl: string; fallbackLogo: string };
 export function ProviderDirectory({ providers }: { providers: Entry[] }) {
@@ -61,8 +62,11 @@ export function ProviderDirectory({ providers }: { providers: Entry[] }) {
                       provider.providerId,
                     ])}
                     href={providerUrl(provider.providerId)}
-                    className="group flex min-h-28 flex-col items-start justify-between gap-4 rounded-2xl border border-[#DEDEDE] bg-white p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fd-primary motion-reduce:transform-none motion-reduce:transition-none"
+                    className="group group/provider relative flex min-h-28 flex-col items-start justify-between gap-4 rounded-2xl border border-[#DEDEDE] bg-white p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fd-primary motion-reduce:transform-none motion-reduce:transition-none"
                   >
+                    <span className="absolute right-1 top-2">
+                      <ProviderStatusBadge status={provider.status} />
+                    </span>
                     <ProviderLogo
                       src={provider.logoUrl}
                       fallback={provider.fallbackLogo}
