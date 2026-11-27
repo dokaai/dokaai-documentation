@@ -235,7 +235,39 @@ jobs:
       - name: Docker Auth
         run: gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
 
+      - name: Check immutable image tag
+        id: registry-image
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_ref="$(printf '%s' '${{ steps.image.outputs.image_ref }}' | tr -d '\r\n')"
+
+          set +e
+          lookup_output="$(
+            gcloud artifacts docker images describe "$image_ref" \
+              --format='value(image_summary.fully_qualified_digest)' 2>&1
+          )"
+          lookup_status=$?
+          set -e
+
+          if [[ "$lookup_status" -eq 0 ]]; then
+            if [[ -z "$lookup_output" ]]; then
+              echo "Artifact Registry returned an empty digest for $image_ref" >&2
+              exit 1
+            fi
+
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Reusing existing immutable image: $lookup_output"
+          elif grep -qiE 'NOT_FOUND|not found' <<< "$lookup_output"; then
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "No existing image was found for $image_ref; it will be pushed."
+          else
+            echo "$lookup_output" >&2
+            exit "$lookup_status"
+          fi
+
       - name: Push container
+        if: steps.registry-image.outputs.exists != 'true'
         run: docker push "${{ steps.image.outputs.image_ref }}"
 
       - name: Resolve image digest
