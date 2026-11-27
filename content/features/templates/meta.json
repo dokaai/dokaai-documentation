@@ -1,0 +1,11 @@
+{
+  "title": "Templates",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "create-and-edit-templates",
+    "variables-and-data-mapping",
+    "template-preview-and-validation",
+    "publishing-and-updates"
+  ]
+}

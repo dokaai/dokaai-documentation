@@ -31,25 +31,32 @@ export function getIntegrationPageTree(
         }),
       ),
   ];
-  return {
-    ...tree,
-    // Fumadocs memoizes trees by $id, so distinguish this generated tree from
-    // the regular docs tree and refresh it when the catalog changes.
-    $id: `integration:${JSON.stringify(children)}`,
-    children: tree.children.map((node) => {
-      if (node.type !== 'folder') return node;
-      const overview = node.children.find(
-        (child) => child.type === 'page' && child.url === '/integration',
-      );
-      if (!overview && node.index?.url !== '/integration') return node;
-      return {
-        ...node,
-        children: [
-          overview ?? children[0],
-          ...children.slice(1),
-          ...node.children.filter((child) => child !== overview),
-        ],
-      };
-    }),
-  };
+  function populate(root: PageTree.Root, id: string): PageTree.Root {
+    return {
+      ...root,
+      // Unlisted roots live in the fallback tree. Give it a catalog-dependent
+      // identity too, so Fumadocs does not reuse stale channel navigation.
+      $id: id,
+      ...(root.fallback
+        ? { fallback: populate(root.fallback, `${id}:fallback`) }
+        : {}),
+      children: root.children.map((node) => {
+        if (node.type !== 'folder') return node;
+        const overview = node.children.find(
+          (child) => child.type === 'page' && child.url === '/integration',
+        );
+        if (!overview && node.index?.url !== '/integration') return node;
+        return {
+          ...node,
+          children: [
+            overview ?? children[0],
+            ...children.slice(1),
+            ...node.children.filter((child) => child !== overview),
+          ],
+        };
+      }),
+    };
+  }
+
+  return populate(tree, `integration:${JSON.stringify(children)}`);
 }

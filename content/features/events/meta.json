@@ -1,0 +1,10 @@
+{
+  "title": "Events",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "browse-notification-events",
+    "event-details-and-snapshots",
+    "execution-and-channel-results"
+  ]
+}

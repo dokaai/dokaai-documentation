@@ -1,0 +1,10 @@
+{
+  "title": "Authentication",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "application-login",
+    "api-keys",
+    "customer-auth-keys"
+  ]
+}

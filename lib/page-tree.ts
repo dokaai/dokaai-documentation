@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
+import { CodeXml } from 'lucide-react';
 
 type PageTreeNode =
   | {
@@ -22,8 +23,8 @@ type PageTreeRoot = {
   children: PageTreeNode[];
 };
 
-const topLevelDocsHiddenUrls = new Set(['/integration', '/api-reference']);
-const topLevelDocsHiddenNames = new Set(['Reference', 'Integration', 'API Reference']);
+const topLevelDocsHiddenUrls = new Set(['/features', '/integration', '/api-reference']);
+const topLevelDocsHiddenNames = new Set(['Reference', 'Features', 'Integration', 'API Reference']);
 
 function shouldKeepDocsSidebarNode(node: PageTreeNode) {
   if (node.type === 'separator') {
@@ -48,6 +49,24 @@ function shouldKeepDocsSidebarNode(node: PageTreeNode) {
 export function getDocsOnlyPageTree<T extends PageTreeRoot>(tree: T): T {
   return {
     ...tree,
-    children: tree.children.filter(shouldKeepDocsSidebarNode),
+    children: tree.children.filter(shouldKeepDocsSidebarNode).map((node) => {
+      if (node.type !== 'folder' || node.name !== 'In-App Inbox') return node;
+
+      return {
+        ...node,
+        name: createElement(
+          'span',
+          {
+            key: 'in-app-inbox-label',
+            className: 'flex min-w-0 flex-1 items-center gap-2',
+          },
+          node.name,
+          createElement(CodeXml, {
+            'aria-hidden': true,
+            className: 'size-4 shrink-0 text-fd-muted-foreground',
+          }),
+        ),
+      };
+    }),
   } as T;
 }
