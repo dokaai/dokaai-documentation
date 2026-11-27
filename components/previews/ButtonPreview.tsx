@@ -2,7 +2,7 @@
 
 import { ArrowRight, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { Button, ButtonLink } from '@/components/ui';
+import { Button, ButtonLink } from '@/components';
 
 export function ButtonPreview() {
   const [loading, setLoading] = useState(false);

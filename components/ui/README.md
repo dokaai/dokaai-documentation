@@ -1,132 +1,123 @@
 # Documentation components
 
-Preview at `/components`. This page is separate from the documentation navigation
-and is marked `noindex`. Components use the existing Fumadocs theme tokens and
-`lib/cn.ts`; no additional UI library is required.
+Preview at `/components`. Documentation content and navigation are separate from
+this preview. Use the existing Fumadocs theme; the brand green is `#389f7f`.
 
-## Structure and exports
+## Structure
 
 ```text
 components/
+  index.ts                       # Public barrel
+  mdx.tsx                        # MDX component registration
   ui/
-    index.ts                    # Shared exports for server and client components
-    server.ts                   # Server-only exports, including CodeBlock
-    button/
-      Button.tsx
-      ButtonLink.tsx
-      button.types.ts
-      button.styles.ts
-      button.test.tsx
+    index.ts                     # Owned components and direct Fumadocs exports
+    button/                      # Button, ButtonLink, types, styles, tests, index
+    card/                        # Card, Cards, types, tests, index
+    image/
+      Image.tsx
+      image.types.ts
       index.ts
-    card/                       # Card, Cards, types, tests, index
-    code-block/                 # CodeBlock, types, tests, index
-    image/                      # Image, types, index
-    segmented-control/          # SegmentedControl, types, tests, index
-    steps/index.ts              # Existing Fumadocs exports
-    callout/index.ts            # Existing Fumadocs exports
+    segmented-control/
+      SegmentedControl.tsx
+      segmented-control.types.ts
+      segmented-control.test.tsx
+      index.ts
   previews/
     ButtonPreview.tsx
+    FencedCodePreview.mdx
     SegmentedControlPreview.tsx
     index.ts
 ```
 
-Each component folder exposes its public components and types through `index.ts`.
-Keep implementation imports within the component folder. Consumers use a barrel:
+## Component boundaries
+
+Keep an owned component where Dokaai needs meaningful visual or behavioral
+variants. Keep standard documentation formatting with Markdown and Fumadocs.
+
+| Owned component | Customization it supports |
+| --- | --- |
+| Button / ButtonLink | Action variants, sizes, icons, loading, disabled state, navigation styling |
+| Card / Cards | Content and linked cards, spacing, layout, brand hover and focus styling |
+| Image | Captions, alt text, sizing, optional zoom |
+| SegmentedControl | Controlled or uncontrolled selection, counts, disabled options, sizes and appearances |
+
+`Step`, `Steps`, `Callout`, `Tabs`, and `Tab` are re-exported directly from
+Fumadocs. They already support the documentation behavior needed here. Callout
+types and tab labels are content options, so they do not need custom wrappers.
+Page headers, headings, tables, and fenced code blocks use the existing MDX
+rendering. Introduce another wrapper only when a concrete design requirement
+cannot be handled by the existing props or shared theme.
+
+## Use the existing blocks
 
 ```tsx
-// Shared components: usable in server or client modules.
-import { Button, Image, SegmentedControl } from '@/components/ui';
-import type { ButtonProps, ImageProps } from '@/components/ui';
-
-// Server components and MDX registration: includes the async highlighter.
-import { CodeBlock, Card, Steps, Step, Callout } from '@/components/ui/server';
+import { Card, Cards, Steps, Step, Callout, Tabs, Tab } from '@/components';
 ```
 
-The shared barrel deliberately excludes CodeBlock. The server barrel has a
-`server-only` guard, so importing it into client code produces a build error
-instead of bundling Shiki. Individual component barrels are also available, such
-as `@/components/ui/button`. Preview code stays outside the reusable UI library.
+They are available in MDX without imports. Use frontmatter for page titles and
+descriptions, Markdown headings for sections, and Markdown tables for tabular
+data. The existing table renderer provides horizontal scrolling.
 
-Run the colocated component tests with:
+For related documentation, compose a heading and cards:
 
-```bash
-node --import tsx --test components/ui/*/*.test.tsx
-```
-
-## Buttons
-
-```tsx
-import { Button, ButtonLink } from '@/components/ui/button';
-
-<Button variant="primary" size="md" onClick={save}>Save</Button>
-<Button loading>Saving</Button>
-<Button size="icon" aria-label="Add item"><Plus aria-hidden="true" /></Button>
-<ButtonLink href="/">Read documentation</ButtonLink>
-```
-
-Variants: `primary`, `secondary`, `outline`, `ghost`. Sizes: `sm`, `md`, `lg`,
-`icon`. Native button props and refs are supported. Buttons default to
-`type="button"`; use `type="submit"` explicitly for forms. Loading disables the
-button and keeps its label. Provide an accessible label for icon-only buttons.
-Use `ButtonLink` for navigation; it supports Next.js Link props and adds
-`noopener noreferrer` for a new tab.
-
-## Cards
-
-```tsx
-import { Card, Cards } from '@/components/ui/card';
+```mdx
+## Related links
 
 <Cards>
   <Card title="Overview" description="Start here." href="/" />
-  <Card title="Details">Supporting content.</Card>
 </Cards>
 ```
 
-These wrap Fumadocs cards, retaining `title`, `description`, `icon`, `href`,
-`external`, and children. `Cards` uses one column on small screens and two on
-larger screens. A card with `href` is one link; keep its children free of buttons
-or other links. Customize spacing and layout with `className`.
+Use Fumadocs Tabs for switching between examples:
 
-## Code blocks
-
-```tsx
-import { CodeBlock } from '@/components/ui/server';
-
-<CodeBlock code={'console.log("Hello world");'} language="javascript" title="example.js" />
+```mdx
+<Tabs items={['JavaScript', 'Python']}>
+  <Tab value="JavaScript">Hello world.</Tab>
+  <Tab value="Python">Hello world.</Tab>
+</Tabs>
 ```
 
-`CodeBlock` is an async **server component**. Import it from the server barrel
-or use it in MDX; pass it as children to a client component if needed.
-Shiki highlights code on the server. Fumadocs provides scrolling, keyboard focus,
-and copying. Unknown languages fall back to plain text. `title` defaults to the
-language; set `allowCopy={false}` to hide copying. Standard fenced MDX code blocks
-continue to use Fumadocs' existing renderer.
+## Code examples
 
-## Segmented control
+Write normal fenced code blocks in MDX:
+
+````mdx
+```javascript title="example.js"
+console.log("Hello world");
+```
+````
+
+Fumadocs provides syntax highlighting and copying. No custom CodeBlock component,
+imports, server barrel, or client wrapper is required.
+
+## Buttons and links
 
 ```tsx
-'use client';
-import { useState } from 'react';
-import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Button, ButtonLink } from '@/components';
 
-const items = [{ value: 'web', label: 'Web' }, { value: 'ios', label: 'iOS' }];
-// Inside your component:
-const [platform, setPlatform] = useState('web');
-<SegmentedControl label="Platform" items={items} value={platform} onValueChange={setPlatform} />
+<Button variant="primary" size="md" onClick={save}>Save</Button>
+<Button loading>Saving</Button>
+<ButtonLink href="/" variant="outline">Documentation</ButtonLink>
 ```
 
-Use `defaultValue` for uncontrolled selection. Without a value, the first enabled
-item is selected. Items require unique `value` strings and accessible labels;
-they can include a `count` or be `disabled`. Supported options: `size="sm" | "md"`,
-`variant="primary" | "surface"`, `fullWidth`, and whole-control `disabled`.
+Variants are `primary`, `secondary`, `outline`, and `ghost`. Sizes are `sm`, `md`,
+`lg`, and `icon`. Native props and refs are supported. Buttons default to
+`type="button"`; set `type="submit"` explicitly for forms. Loading disables the
+button and retains its label. Icon-only buttons need an accessible label.
+ButtonLink supports Next.js Link props and secures new tabs with
+`noopener noreferrer`.
 
-This is a single-choice radio group, not a tab panel system. Native radios support
-Tab, arrow keys, Space, and form submission through `name`. Keep `name` unique
-between independent groups, or omit it to generate one automatically. Use
-Fumadocs Tabs for associated tab panels. Do not nest interactive elements in item
-labels.
+## Cards
 
-## Images
+Card and Cards wrap the existing Fumadocs primitives with Dokaai's spacing, focus,
+and hover styling. Card accepts `title`, `description`, `icon`, `href`, `external`,
+and children. Cards provides a responsive grid. Both support `className` overrides.
+Keep linked cards free of nested links or buttons.
+
+## Image
+
+This is a small convenience component for captions, responsive sizing, and the
+existing Fumadocs zoom control:
 
 ```mdx
 <Image
@@ -138,54 +129,39 @@ labels.
 />
 ```
 
-Use actual image dimensions to reserve layout space. `alt` must describe the
-relevant screen details; the optional caption explains why the image matters.
-Images retain their aspect ratio, fit the page width, and load lazily by default.
-Fumadocs provides the zoom dialog and keyboard controls; use `zoom={false}` to
-disable zoom. `className` styles the image; `figureClassName` styles the figure.
-Next.js Image props such as `sizes` and `priority` are also supported. Store
-images in `public/images`; remote images require the usual Next.js image
-configuration. The preview image is a capture of our own component preview.
+Use actual dimensions to reserve space and meaningful alt text. `caption` is
+optional. Set `zoom={false}` to disable zoom. `className` styles the image;
+`figureClassName` styles the figure. Standard Next.js Image options are supported.
+Remote images require the usual Next.js image configuration.
 
-## Related links
+## SegmentedControl
 
-Compose related documentation with a Markdown heading and the existing cards:
+Keep this for selecting a single option, rather than displaying tab panels:
 
-```mdx
-## Related links
+```tsx
+'use client';
+import { useState } from 'react';
+import { SegmentedControl } from '@/components';
 
-<Cards>
-  <Card title="Overview" description="Start here." href="/" />
-</Cards>
+// Inside a component:
+const [platform, setPlatform] = useState('web');
+<SegmentedControl
+  label="Platform"
+  items={[{ value: 'web', label: 'Web' }, { value: 'ios', label: 'iOS' }]}
+  value={platform}
+  onValueChange={setPlatform}
+/>
 ```
 
-## Steps and callouts
+Use `defaultValue` for uncontrolled selection. The first enabled item is selected
+by default. Items require unique values; optional fields are `count` and
+`disabled`. Options include `size="sm" | "md"`, `variant="primary" | "surface"`,
+`fullWidth`, and whole-control `disabled`. Native radios provide form submission,
+keyboard navigation, and focus. Give independent controls unique names or let
+names generate automatically. Do not nest interactive elements in item labels.
 
-These are existing Fumadocs components, exposed directly without custom wrappers.
+Run the retained component tests with:
 
-```mdx
-<Steps>
-  <Step>
-    ### Create a project
-
-    Hello world.
-  </Step>
-  <Step>
-    ### Enable a service
-
-    Hello world.
-  </Step>
-</Steps>
-
-<Callout type="info" title="Note">Hello world.</Callout>
-<Callout type="idea" title="Tip">Hello world.</Callout>
-<Callout type="warn" title="Warning">Hello world.</Callout>
+```bash
+node --import tsx --test components/ui/*/*.test.tsx
 ```
-
-Use normal Markdown headings in steps so they participate in Fumadocs' table of
-contents. Keep page headers in frontmatter, sections as Markdown headings, and
-tables as Markdown tables; the existing table renderer already scrolls on narrow
-screens.
-
-All named components above are available in MDX without imports. For TSX, use the
-shared or server barrel described above, or an individual component's `index.ts`.

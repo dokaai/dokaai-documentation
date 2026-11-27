@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SegmentedControl } from '@/components/ui';
+import { SegmentedControl } from '@/components';
 
 const platforms = [
   { value: 'web', label: 'Web' },
