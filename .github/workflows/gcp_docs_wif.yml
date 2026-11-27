@@ -1,4 +1,5 @@
 name: Deploy Documentation WIF
+run-name: "Deploy Documentation (${{ github.event_name == 'workflow_dispatch' && format('PR #{0}', inputs.pr_number) || github.ref_name }})"
 
 on:
   push:
@@ -25,8 +26,8 @@ on:
       - ".github/workflows/gcp_docs_wif.yml"
   workflow_dispatch:
     inputs:
-      source_sha:
-        description: Full 40-character commit SHA from the feature branch or PR
+      pr_number:
+        description: Pull request number to verify and deploy to dev
         required: true
         type: string
 
@@ -34,20 +35,136 @@ concurrency:
   group: deploy-docs-wif-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  id-token: write
+permissions: {}
 
 jobs:
+  prepare:
+    name: Resolve deployment source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      source_sha: ${{ steps.push-source.outputs.source_sha || steps.pr-source.outputs.source_sha }}
+      pr_number: ${{ steps.pr-source.outputs.pr_number }}
+    steps:
+      - name: Use pushed commit
+        id: push-source
+        if: github.event_name == 'push'
+        shell: bash
+        run: echo "source_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Validate pull request and resolve commit
+        id: pr-source
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          PR_NUMBER: ${{ inputs.pr_number }}
+        with:
+          script: |
+            const rawPrNumber = process.env.PR_NUMBER ?? '';
+
+            if (context.actor !== 'ajoshi31') {
+              throw new Error('Only ajoshi31 may manually deploy a pull request.');
+            }
+
+            if (context.ref !== 'refs/heads/dev') {
+              throw new Error('Manual deployments must use the workflow from dev.');
+            }
+
+            if (!/^[1-9][0-9]*$/.test(rawPrNumber)) {
+              throw new Error('pr_number must be a positive integer.');
+            }
+
+            const prNumber = Number(rawPrNumber);
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+
+            if (pullRequest.state !== 'open') {
+              throw new Error(`PR #${prNumber} is not open.`);
+            }
+
+            if (pullRequest.draft) {
+              throw new Error(`PR #${prNumber} is still a draft.`);
+            }
+
+            if (pullRequest.head.repo?.full_name !== context.payload.repository.full_name) {
+              throw new Error('Only pull requests from this repository may be deployed.');
+            }
+
+            if (!/^[0-9a-f]{40}$/i.test(pullRequest.head.sha)) {
+              throw new Error(`PR #${prNumber} did not resolve to a full commit SHA.`);
+            }
+
+            core.setOutput('source_sha', pullRequest.head.sha);
+            core.setOutput('pr_number', String(prNumber));
+
+            await core.summary
+              .addHeading(`Deploy PR #${prNumber}`)
+              .addTable([
+                [{ data: 'Field', header: true }, { data: 'Value', header: true }],
+                ['PR', `#${prNumber}: ${pullRequest.title}`],
+                ['Source branch', pullRequest.head.ref],
+                ['Base branch', pullRequest.base.ref],
+                ['Source SHA', pullRequest.head.sha],
+              ])
+              .addLink('Open pull request', pullRequest.html_url)
+              .write();
+
+  verify:
+    name: Verify PR code
+    if: github.event_name == 'workflow_dispatch' && needs.prepare.result == 'success'
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout verified PR commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.source_sha }}
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check types
+        run: pnpm types:check
+
+      - name: Build
+        run: pnpm build
+
   deploy:
     if: >-
-      github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' &&
-      github.actor == 'ajoshi31' &&
-      github.ref == 'refs/heads/dev')
+      always() &&
+      needs.prepare.result == 'success' &&
+      (github.event_name == 'push' || needs.verify.result == 'success')
+    needs:
+      - prepare
+      - verify
     environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
     env:
       PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       GAR_NAME: frontend-services
@@ -55,18 +172,9 @@ jobs:
       GAR_SERVICE: docs
       SERVICE: docs
       REGION: ${{ vars.GCP_REGION }}
-      SOURCE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
+      SOURCE_SHA: ${{ needs.prepare.outputs.source_sha }}
+      SOURCE_PR: ${{ needs.prepare.outputs.pr_number || 'push' }}
     steps:
-      - name: Validate deployment source
-        if: github.event_name == 'workflow_dispatch'
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [[ ! "$SOURCE_SHA" =~ ^[0-9a-fA-F]{40}$ ]]; then
-            echo "source_sha must be a full 40-character commit SHA." >&2
-            exit 1
-          fi
-
       - name: Validate runtime configuration
         shell: bash
         env:
@@ -152,6 +260,9 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ steps.image-digest.outputs.image_digest }}
+          labels: |-
+            source-sha=${{ env.SOURCE_SHA }}
+            source-pr=${{ env.SOURCE_PR }}
           env_vars: ${{ secrets.DOCS_ENV_SECRET }}
           env_vars_update_strategy: overwrite
 
