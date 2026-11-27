@@ -1,4 +1,4 @@
-import { docs } from 'collections/server';
+import { docs, providerGuides } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { openapiPlugin } from 'fumadocs-openapi/server';
@@ -36,3 +36,9 @@ export async function getLLMText(page: (typeof source)['$inferPage']) {
 
 ${processed}`;
 }
+
+// Separate from the public docs tree: these MDX bodies live inside provider detail pages.
+export const providerGuideSource = loader({
+  baseUrl: '/integration/providers',
+  source: providerGuides.toFumadocsSource(),
+});

@@ -16,6 +16,10 @@ export const docs = defineDocs({
   },
 });
 
+export const providerGuides = defineDocs({
+  dir: 'provider-guides',
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options

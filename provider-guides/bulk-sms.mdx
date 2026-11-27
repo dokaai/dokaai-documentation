@@ -1,0 +1,27 @@
+---
+title: BulkSMS integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare a BulkSMS account with SMS sending access and a sender suitable for your destination.
+
+## Connect BulkSMS
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **BulkSMS**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the SMS channel for your notification handler.
+
+## Verify delivery
+
+Use a valid international phone number and inspect the message report in BulkSMS.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check the account status or credit, destination format, sender restrictions, and delivery report.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.

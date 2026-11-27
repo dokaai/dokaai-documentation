@@ -1,0 +1,27 @@
+---
+title: Netcore integration guide
+---
+
+## Before you begin
+
+- You need access to a Dokaai organization that can manage notification providers.
+- Prepare a Netcore account with email sending enabled and a sender or domain approved for your account.
+
+## Connect Netcore
+
+1. In Dokaai, open your organization and go to **Integrations → Notification providers**.
+2. Choose **Netcore**. Enter an integration name and complete the fields shown in the provider form. The form reflects the current provider configuration; keep credentials private.
+3. Complete the test and install flow shown for this provider. Where a test recipient is requested, use a destination you control.
+4. Select the installed integration when configuring the email channel for your notification handler.
+
+## Verify delivery
+
+Verify the sender and inspect the message activity in your Netcore account.
+
+Trigger a test notification from Dokaai and compare its result with the provider-side activity. An accepted request may not mean the message has reached the recipient; check the final delivery status where available.
+
+## Troubleshooting
+
+Check account access, sender approval, and the provider’s delivery report for the recipient.
+
+If the provider accepted the message but it does not appear, check the recipient destination and the notification handler’s channel configuration. Update the integration if credentials have changed, then test again.

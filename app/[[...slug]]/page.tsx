@@ -1,4 +1,4 @@
-import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
+import { getPageImage, getPageMarkdownUrl, providerGuideSource, source } from '@/lib/source';
 import {
   DocsBody,
   DocsDescription,
@@ -12,6 +12,13 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
+import { getProviderCatalog, getProviderDetail } from '@/lib/integrations/provider-catalog';
+import { ProviderDetail, PublishedProviderGuide } from '@/components/integrations/provider-detail';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
+import { IntegrationPageSkeleton } from '@/components/integrations/integration-loading';
+import { getProviderMetadata } from '@/lib/integrations/provider-metadata';
+import { withBasePath } from '@/lib/shared';
 
 type PageParams = {
   slug?: string[];
@@ -19,7 +26,24 @@ type PageParams = {
 
 export default async function Page(props: { params: Promise<PageParams> }) {
   const params = await props.params;
-  const page = source.getPage(params.slug ?? []);
+  const slug = params.slug ?? [];
+  if (slug[0] === 'integration') await connection();
+  const page = source.getPage(slug);
+  if (
+    !page &&
+    slug.length === 3 &&
+    slug[0] === 'integration' &&
+    slug[1] === 'providers'
+  ) {
+    const guide = providerGuideSource.getPage([slug[2]]);
+    return (
+      <Suspense fallback={guide
+        ? <PublishedProviderGuide guide={guide} loading />
+        : <IntegrationPageSkeleton detail />}>
+        <ProviderPage providerId={slug[2]} />
+      </Suspense>
+    );
+  }
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -35,7 +59,9 @@ export default async function Page(props: { params: Promise<PageParams> }) {
       tableOfContentPopover={{ enabled: !isApiReferencePage, style: 'clerk' }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
+      <DocsDescription className="mb-0">
+        {page.data.description}
+      </DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover
@@ -54,13 +80,68 @@ export default async function Page(props: { params: Promise<PageParams> }) {
   );
 }
 
+async function ProviderPage({ providerId }: { providerId: string }) {
+  const guide = providerGuideSource.getPage([providerId]);
+  const providers = await getProviderCatalog();
+  const provider = providers?.find((item) => item.providerId === providerId);
+  if (!provider && guide) return <PublishedProviderGuide guide={guide} />;
+  if (!providers)
+    return (
+      <DocsPage>
+        <DocsTitle>Providers temporarily unavailable</DocsTitle>
+        <DocsBody>Please try again later.</DocsBody>
+      </DocsPage>
+    );
+  if (!provider) notFound();
+  const detail = await getProviderDetail(provider.providerId);
+  return (
+    <ProviderDetail
+      provider={{
+        ...provider,
+        credentialSchema: detail?.credentialSchema ?? provider.credentialSchema,
+      }}
+      detailUnavailable={!detail}
+    />
+  );
+}
+
 export async function generateStaticParams() {
   return source.generateParams();
 }
 
-export async function generateMetadata(props: { params: Promise<PageParams> }): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<PageParams>;
+}): Promise<Metadata> {
   const params = await props.params;
-  const page = source.getPage(params.slug ?? []);
+  const slug = params.slug ?? [];
+  const page = source.getPage(slug);
+  if (
+    !page &&
+    slug.length === 3 &&
+    slug[0] === 'integration' &&
+    slug[1] === 'providers'
+  ) {
+    const metadata = await getProviderMetadata(slug[2]);
+    if (!metadata) return { title: 'Provider integration | Dokaai' };
+    const { title, description, url, image } = metadata;
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: withBasePath(url),
+        type: 'website',
+        images: [{ url: image, width: 1200, height: 630, alt: title }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [image],
+      },
+    };
+  }
   if (!page) notFound();
 
   return {
