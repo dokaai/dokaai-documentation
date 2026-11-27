@@ -1,0 +1,10 @@
+{
+  "title": "Service Subscription",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "organization-services",
+    "project-services",
+    "pausing-service"
+  ]
+}

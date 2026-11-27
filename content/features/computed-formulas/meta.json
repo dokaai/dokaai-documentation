@@ -1,0 +1,10 @@
+{
+  "title": "Computed Formulas",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "create-and-edit-formulas",
+    "formula-preview-and-validation",
+    "use-formulas-in-templates"
+  ]
+}

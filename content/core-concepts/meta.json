@@ -1,0 +1,16 @@
+{
+  "title": "Core concepts",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "organization",
+    "projects",
+    "product-spaces",
+    "services",
+    "notification-handlers",
+    "notification-lifecycle-and-events",
+    "customers-and-audiences",
+    "preferences-and-policy",
+    "send-policy"
+  ]
+}

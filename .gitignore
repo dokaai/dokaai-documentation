@@ -22,8 +22,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # others
-.env*.local
-.env.development
-.env.production
+# Local environment files; keep the configuration template tracked.
+.env*
+!.env.example
 .vercel
 next-env.d.ts

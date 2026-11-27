@@ -1,0 +1,13 @@
+{
+  "title": "Developer integration",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "trigger-notifications",
+    "customer-authentication",
+    "in-app",
+    "customer-preferences",
+    "zapier",
+    "n8n"
+  ]
+}

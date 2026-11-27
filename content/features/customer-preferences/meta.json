@@ -1,0 +1,12 @@
+{
+  "title": "Customer Preferences",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "groups-and-topics",
+    "examples",
+    "preference-choices",
+    "screens",
+    "non-customer-opt-in"
+  ]
+}

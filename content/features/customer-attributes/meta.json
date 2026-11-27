@@ -1,0 +1,10 @@
+{
+  "title": "Customer Attributes",
+  "defaultOpen": false,
+  "pages": [
+    "index",
+    "app-and-custom-attributes",
+    "create-and-edit-attributes",
+    "bulk-attribute-preparation"
+  ]
+}

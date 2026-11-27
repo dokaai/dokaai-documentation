@@ -1,0 +1,14 @@
+{
+  "title": "Send Message",
+  "defaultOpen": false,
+  "pages": [
+    "prerequisites",
+    "handlers",
+    "channels",
+    "recipients",
+    "templates",
+    "variables",
+    "test-and-send",
+    "schedules"
+  ]
+}
