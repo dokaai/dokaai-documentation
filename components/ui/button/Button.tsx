@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react';
-import { buttonStyles } from './button.styles';
+import { buttonLoadingIconStyles, buttonStyles } from './button.styles';
 import type { ButtonProps } from './button.types';
 
 export function Button({
@@ -13,7 +13,7 @@ export function Button({
       aria-busy={loading || undefined}
       className={buttonStyles({ variant, size, className })}
     >
-      {loading && <LoaderCircle className="animate-spin motion-reduce:animate-none" aria-hidden="true" />}
+      {loading && <LoaderCircle className={buttonLoadingIconStyles} aria-hidden="true" />}
       {children}
     </button>
   );

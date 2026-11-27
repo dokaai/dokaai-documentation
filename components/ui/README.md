@@ -12,14 +12,16 @@ components/
   ui/
     index.ts                     # Owned components and direct Fumadocs exports
     button/                      # Button, ButtonLink, types, styles, tests, index
-    card/                        # Card, Cards, types, tests, index
+    card/                        # Card with inline props, styles, tests, index
     image/
       Image.tsx
       image.types.ts
+      image.styles.ts
       index.ts
     segmented-control/
       SegmentedControl.tsx
       segmented-control.types.ts
+      segmented-control.styles.ts
       segmented-control.test.tsx
       index.ts
   previews/
@@ -31,13 +33,20 @@ components/
 
 ## Component boundaries
 
+Owned components keep styling in a colocated `*.styles.ts` file, including
+variants, sizes, and state styles. Component files handle markup and behavior.
+Use separate types files for larger prop APIs; keep a simple inherited type like
+CardProps inline. Public components and types are exported through each folder's
+`index.ts` and the shared `@/components` barrel; style helpers stay internal unless
+they need to be reused externally.
+
 Keep an owned component where Dokaai needs meaningful visual or behavioral
 variants. Keep standard documentation formatting with Markdown and Fumadocs.
 
 | Owned component | Customization it supports |
 | --- | --- |
 | Button / ButtonLink | Action variants, sizes, icons, loading, disabled state, navigation styling |
-| Card / Cards | Content and linked cards, spacing, layout, brand hover and focus styling |
+| Card | Content and linked cards, spacing, layout, brand hover and focus styling |
 | Image | Captions, alt text, sizing, optional zoom |
 | SegmentedControl | Controlled or uncontrolled selection, counts, disabled options, sizes and appearances |
 
@@ -51,7 +60,7 @@ cannot be handled by the existing props or shared theme.
 ## Use the existing blocks
 
 ```tsx
-import { Card, Cards, Steps, Step, Callout, Tabs, Tab } from '@/components';
+import { Card, Steps, Step, Callout, Tabs, Tab } from '@/components';
 ```
 
 They are available in MDX without imports. Use frontmatter for page titles and
@@ -63,9 +72,7 @@ For related documentation, compose a heading and cards:
 ```mdx
 ## Related links
 
-<Cards>
-  <Card title="Overview" description="Start here." href="/" />
-</Cards>
+<Card title="Overview" description="Start here." href="/" />
 ```
 
 Use Fumadocs Tabs for switching between examples:
@@ -109,9 +116,10 @@ ButtonLink supports Next.js Link props and secures new tabs with
 
 ## Cards
 
-Card and Cards wrap the existing Fumadocs primitives with Dokaai's spacing, focus,
-and hover styling. Card accepts `title`, `description`, `icon`, `href`, `external`,
-and children. Cards provides a responsive grid. Both support `className` overrides.
+Card wraps the existing Fumadocs primitive with Dokaai's spacing, focus, and hover
+styling. It accepts `title`, `description`, `icon`, `href`, `external`, and children.
+Use ordinary layout containers for grids and spacing. Card supports `className`
+overrides.
 Keep linked cards free of nested links or buttons.
 
 ## Image

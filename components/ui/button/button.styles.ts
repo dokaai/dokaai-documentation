@@ -1,6 +1,8 @@
 import { cn } from '@/lib/cn';
 import type { ButtonStyleProps } from './button.types';
 
+export const buttonLoadingIconStyles = 'animate-spin motion-reduce:animate-none';
+
 const variants = {
   primary: 'border-transparent bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90',
   secondary: 'border-transparent bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-accent',

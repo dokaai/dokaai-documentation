@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Bell, Code2 } from 'lucide-react';
 import { ButtonPreview, SegmentedControlPreview } from '@/components/previews';
-import { Card, Cards, Image, Step, Steps, Callout, Tabs, Tab } from '@/components';
+import { Card, Image, Step, Steps, Callout, Tabs, Tab } from '@/components';
 import FencedCodePreview from '@/components/previews/FencedCodePreview.mdx';
 import { getMDXComponents } from '@/components/mdx';
 import MarkdownPreview from '@/components/previews/MarkdownPreview.mdx';
@@ -34,12 +34,12 @@ export default function ComponentPreviewPage() {
 
         <section aria-labelledby="cards" className="space-y-4">
           <h3 id="cards" className="text-lg font-semibold">Cards</h3>
-          <Cards className="grid-cols-1 sm:grid-cols-2">
+          <div className="@container my-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Card icon={<Bell />} title="Content card" description="Use a card to group related information.">
               Optional supporting content goes here.
             </Card>
             <Card icon={<Code2 />} title="Linked card" description="Open the documentation overview." href="/" />
-          </Cards>
+          </div>
         </section>
 
         <section aria-labelledby="segmented-control" className="space-y-4">
@@ -60,10 +60,10 @@ export default function ComponentPreviewPage() {
 
         <section aria-labelledby="related-links">
           <h3 id="related-links" className="mb-4 text-lg font-semibold tracking-tight">Related links</h3>
-          <Cards className="grid-cols-1 sm:grid-cols-2">
+          <div className="@container my-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Card title="Documentation" description="Open the documentation overview." href="/" />
             <Card title="Buttons" description="Return to the button examples above." href="#buttons" />
-          </Cards>
+          </div>
         </section>
       </section>
 

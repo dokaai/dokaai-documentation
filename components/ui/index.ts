@@ -1,7 +1,7 @@
 export { Button, ButtonLink, buttonStyles } from './button';
 export type { ButtonProps, ButtonLinkProps, ButtonStyleProps } from './button';
-export { Card, Cards } from './card';
-export type { CardProps, CardsProps } from './card';
+export { Card } from './card';
+export type { CardProps } from './card';
 export { Step, Steps } from 'fumadocs-ui/components/steps';
 export { Callout } from 'fumadocs-ui/components/callout';
 export type { CalloutType } from 'fumadocs-ui/components/callout';
