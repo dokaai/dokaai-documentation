@@ -6,13 +6,13 @@
 :root {
   --color-fd-background: #fafafa;
   --color-fd-muted: #f3f4f6;
-  --color-fd-primary: hsl(158, 72%, 36%);
+  --color-fd-primary: #389f7f;
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
 }
 
 .dark {
-  --color-fd-primary: hsl(158, 76%, 48%);
-  --color-fd-primary-foreground: hsl(160, 70%, 8%);
+  --color-fd-primary: #389f7f;
+  --color-fd-primary-foreground: #fff;
 }
 
 html {

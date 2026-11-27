@@ -1,11 +1,21 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { APIPage } from '@/components/api-page';
 import type { MDXComponents } from 'mdx/types';
+import { Button, ButtonLink, Card, SegmentedControl, Image, Step, Steps, Tabs, Tab } from '@/components';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
     APIPage,
+    Button,
+    ButtonLink,
+    Card,
+    SegmentedControl,
+    Image,
+    Step,
+    Steps,
+    Tabs,
+    Tab,
     ...components,
   } satisfies MDXComponents;
 }
